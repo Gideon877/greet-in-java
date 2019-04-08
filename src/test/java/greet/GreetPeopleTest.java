@@ -1,5 +1,7 @@
 package greet;
 
+import greet.greet.CommandBuilder;
+import greet.greet.ConsoleColors;
 import greet.greet.GreetPeople;
 import org.junit.jupiter.api.*;
 
@@ -26,6 +28,12 @@ public class GreetPeopleTest {
         person.greetPerson("Lebo", null);
 
         assertEquals(person.getGreetCounter("Lebo"), 2);
+
+        ConsoleColors consoleColors = new ConsoleColors();
+        CommandBuilder commandBuilder = new CommandBuilder();
+        commandBuilder.help();
+
+//        System.out.println("Hello, " + consoleColors.BLACK_BOLD + "Thabang" + consoleColors.RESET);
 
     }
 

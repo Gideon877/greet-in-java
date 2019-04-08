@@ -9,6 +9,7 @@ public class GreetPeople {
 
     GreetCounter greetCounter = new GreetCounter();
     StringMethods stringMethods = new StringMethods();
+    ConsoleColors consoleColors = new ConsoleColors();
 
     public GreetPeople() throws Exception {
     }
@@ -32,11 +33,16 @@ public class GreetPeople {
 
     private String greetBuilder(String Name, String language) {
         try {
-            return String.format("%s, %s!", Language.valueOf(language).getExpression(), Name);
+            return greetFormat( consoleColors.BLACK_BOLD, Language.valueOf(language).getExpression(), Name);
         } catch (IllegalArgumentException e) {
-            return String.format("%s, %s!", Language.valueOf("English").getExpression(), Name);
+            return greetFormat(consoleColors.RED_BOLD_BRIGHT, Language.valueOf("English").getExpression(), Name);
         }
     }
+
+    private String  greetFormat(String color, String language, String userName) {
+        return String.format("%s%s, %s!%s", color, language, userName, consoleColors.RESET);
+    }
+
 
     public int getGreetCounter(String userName) throws Exception {
         userName = stringMethods.Capitalize(userName);
