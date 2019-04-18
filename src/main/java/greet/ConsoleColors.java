@@ -1,4 +1,4 @@
-package greet.greet;
+package greet;
 
 public class ConsoleColors {
     // Reset

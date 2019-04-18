@@ -1,1 +1,1 @@
-insert into users (name, count) values ('John', 1);
+insert into users (name, count) values ('John', 3);

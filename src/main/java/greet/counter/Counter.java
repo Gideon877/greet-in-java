@@ -1,10 +1,15 @@
 package greet.counter;
 
+import greet.Language;
+import greet.StringMethods;
+
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DbCounter {
+import static greet.ConsoleColors.*;
+
+public class Counter {
 
     final String USER_INSERT_SQL = "insert into users (name, count) values (?, ?)";
     final String FIND_ALL_USERS_SQL = "select * from users";
@@ -12,6 +17,7 @@ public class DbCounter {
     final String COUNT_UPDATE_SQL = "update users set count = count + 1 where name = ?";
     final String CLEAR_COUNT_SQL = "delete from users";
     final String CLEAR_USER_COUNT_SQL = "delete from users where name = ?";
+//    final String COUNT_USER_SQL = "select count(*) as count from users";
 
     final PreparedStatement insertNameAndCountPreparedStatement;
     final PreparedStatement findNamePreparedStatement;
@@ -19,19 +25,25 @@ public class DbCounter {
     final PreparedStatement findAllPreparedStatement;
     final PreparedStatement clearAllPreparedStatement;
     final PreparedStatement clearUserPreparedStatement;
-    private final String userName;
+//    final PreparedStatement countUserPreparedStatement;
 
-    public DbCounter(String userName, Connection connection) throws SQLException {
-        this.userName = userName;
-        insertNameAndCountPreparedStatement = connection.prepareStatement(USER_INSERT_SQL);
-        findNamePreparedStatement = connection.prepareStatement(FIND_NAME_SQL);
-        findAllPreparedStatement = connection.prepareStatement(FIND_ALL_USERS_SQL);
-        updateCountPreparedStatement = connection.prepareStatement(COUNT_UPDATE_SQL);
-        clearAllPreparedStatement = connection.prepareStatement(CLEAR_COUNT_SQL);
-        clearUserPreparedStatement = connection.prepareStatement(CLEAR_USER_COUNT_SQL);
+    final String GREET_DATABASE_URL = "jdbc:h2:./target/greet_db";
+    Connection connection;
+    StringMethods stringMethods = new StringMethods();
+
+    public Counter() throws SQLException, ClassNotFoundException {
+            Class.forName("org.h2.Driver");
+            connection = DriverManager.getConnection(GREET_DATABASE_URL, "sa", "");
+            insertNameAndCountPreparedStatement = connection.prepareStatement(USER_INSERT_SQL);
+            findNamePreparedStatement = connection.prepareStatement(FIND_NAME_SQL);
+            findAllPreparedStatement = connection.prepareStatement(FIND_ALL_USERS_SQL);
+            updateCountPreparedStatement = connection.prepareStatement(COUNT_UPDATE_SQL);
+            clearAllPreparedStatement = connection.prepareStatement(CLEAR_COUNT_SQL);
+            clearUserPreparedStatement = connection.prepareStatement(CLEAR_USER_COUNT_SQL);
+//            countUserPreparedStatement = connection.prepareStatement(COUNT_USER_SQL);
     }
 
-    public void clearAllUsers() throws SQLException {
+    public void clearAllUsers() {
         try {
             clearAllPreparedStatement.execute();
         } catch (SQLException e) {
@@ -39,13 +51,11 @@ public class DbCounter {
         }
     }
 
-    public void addNewUser() throws SQLException {
-
+    public void addNewUser(String userName) {
         try {
             insertNameAndCountPreparedStatement.setString(1, userName);
             insertNameAndCountPreparedStatement.setInt(2, 1);
             insertNameAndCountPreparedStatement.execute();
-//            System.out.println("User created successfully.");
         } catch (SQLException e) {
             System.out.println("Error occured! " + e);
         } catch (Exception e) {
@@ -53,13 +63,11 @@ public class DbCounter {
         }
     }
 
-    public Map<String, Integer> findUser() throws SQLException {
+    public Map<String, Integer> findUser(String userName) throws SQLException {
         Map<String, Integer> map = new HashMap<>();
-
         try {
             findNamePreparedStatement.setString(1, userName);
             ResultSet rs = findNamePreparedStatement.executeQuery();
-
             if(rs.next()) {
                 map.put(rs.getString("name"), rs.getInt("count"));
             }
@@ -72,9 +80,7 @@ public class DbCounter {
         return map;
     }
 
-
-    public int findAndUpdateUser() throws SQLException {
-
+    public int findAndUpdateUser(String userName){
         try {
             updateCountPreparedStatement.setString(1, userName);
 
@@ -87,7 +93,7 @@ public class DbCounter {
         return 0;
     }
 
-    public Map<String, Integer> findAllUsers() throws SQLException {
+    public Map<String, Integer> findAllUsers() {
         Map<String, Integer> map = new HashMap<>();
         try {
             findAllPreparedStatement.execute();
@@ -110,5 +116,38 @@ public class DbCounter {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int usersCounter() {
+        return findAllUsers().size();
+    }
+
+    public String greetPerson(String userName, String language) throws SQLException {
+        if(language == null || language.isEmpty()) {
+            language = "English";
+        }
+        language = stringMethods.Capitalize(language);
+        userName = stringMethods.Capitalize(userName);
+
+        if(findUser(userName).isEmpty()) {
+            addNewUser(userName);
+        } else {
+            findAndUpdateUser(userName);
+        }
+
+        return greetBuilder(userName, language);
+
+    }
+
+    private String greetBuilder(String Name, String language) {
+        try {
+            return greetFormat( BLACK_BOLD, Language.valueOf(language).getExpression(), Name);
+        } catch (IllegalArgumentException e) {
+            return greetFormat(RED_BOLD_BRIGHT, Language.valueOf("English").getExpression(), Name);
+        }
+    }
+
+    private String  greetFormat(String color, String language, String userName) {
+        return String.format("%s%s, %s!%s", color, language, userName, RESET);
     }
 }

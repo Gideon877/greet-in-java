@@ -1,11 +1,9 @@
-package greet.greet;
-
-import greet.Language;
+package greet;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class GreetPeopleHashMap {
+public class GreetPeople {
     Map<String, Integer> names = new HashMap<>();
 
     StringMethods stringMethods = new StringMethods();
@@ -23,8 +21,8 @@ public class GreetPeopleHashMap {
         } else {
             names.put(userName, 1);
         }
-
         return greetBuilder(userName, language);
+
     }
 
     public String greetBuilder(String Name, String language) {
@@ -36,7 +34,11 @@ public class GreetPeopleHashMap {
     }
 
     public int getGreetCounter(String userName) {
-        return names.get(userName);
+        try {
+            return names.get(userName);
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 
     public Map<String, Integer> getUsersCount() {

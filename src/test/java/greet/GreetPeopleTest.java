@@ -1,100 +1,103 @@
 package greet;
 
-import greet.greet.CommandBuilder;
-import greet.greet.ConsoleColors;
-import greet.greet.GreetPeople;
 import org.junit.jupiter.api.*;
 
-import java.sql.SQLException;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+class GreetPeopleTest {
+    GreetPeople greeter = new GreetPeople();
+    @Nested
+    @DisplayName("when command is greet")
+    class GreetPerson {
+        GreetPeople greet;
+        final String userOne = "Dan";
+        final String zulu = "Zulu";
 
-public class GreetPeopleTest {
-    private String userName = "Thabang";
-    private String language = "Xhosa";
+        @BeforeEach
+        void setClass() {
+            greet = new GreetPeople();
+        }
 
-    @BeforeEach
-    void resetDb() throws Exception {
-        GreetPeople person = new GreetPeople();
-        person.clearAllUsers();
+        @Test
+        @DisplayName("greet person with default language")
+        void greetPerson() {
+            assertEquals("Hello, Dan!" , greet.greetPerson(userOne, null));
+        }
+
+        @Test
+        @DisplayName("greet person in Zulu")
+        void greetPersonInZulu() {
+            assertEquals("Sawubona, Dan!" , greet.greetPerson(userOne, zulu));
+        }
+    }
+
+    @Nested
+    @DisplayName("when greetBuilder is executed")
+    class greetBuilder {
+        GreetPeople greet;
+
+        @BeforeEach
+        void setClass() {
+            greet = new GreetPeople();
+        }
+
+        @Test
+        @DisplayName("greet person in Sotho")
+        void greetPersonInSotho() {
+            assertEquals("Dumela, Dan!" , greet.greetPerson("Dan", "Sotho"));
+        }
+        @Test
+        @DisplayName("greet person with default language")
+        void greetPerson() {
+            assertEquals("Hello, Dan!" , greet.greetPerson("Dan", null));
+        }
+
     }
 
     @Test
-    void shouldReturnCountForSpecificUser() throws Exception {
-        GreetPeople person = new GreetPeople();
-
-        person.greetPerson("Lebo", null);
-        person.greetPerson("John", "Zulu");
-        person.greetPerson("Lebo", null);
-
-        assertEquals(person.getGreetCounter("Lebo"), 2);
-
-        ConsoleColors consoleColors = new ConsoleColors();
-        CommandBuilder commandBuilder = new CommandBuilder();
-        commandBuilder.help();
-
-//        System.out.println("Hello, " + consoleColors.BLACK_BOLD + "Thabang" + consoleColors.RESET);
-
+    void getGreetCounter() {
+        assertEquals(0, greeter.getGreetCounter("John"));
+        greeter.greetPerson("John", null);
+        assertEquals(1, greeter.getGreetCounter("John"));
     }
 
     @Test
-    public void shouldReturnCountOfGreetedNames() throws Exception {
-        GreetPeople person = new GreetPeople();
+    void getUsersCount() {
+        greeter.greetPerson("John", null);
+        greeter.greetPerson("Jonas", null);
+        greeter.greetPerson("Vince", null);
 
-        person.greetPerson("Lebo", null);
-        person.greetPerson("John", "Zulu");
-        person.greetPerson(userName, "");
-        person.greetPerson("Lebo", null);
-
-        assertEquals(person.getUsersCount().size(), 3);
-
+        assertEquals("{Vince=1, John=1, Jonas=1}", greeter.getUsersCount().toString());
     }
 
     @Test
-    public void shouldGreetPersonInAfrikaans() throws Exception {
-        String language = "Afrikaans";
-        GreetPeople greet = new GreetPeople();
+    void counter() {
+        greeter.greetPerson("John", null);
+        greeter.greetPerson("Jonas", null);
 
-        assertEquals(greet.greetPerson(userName, language), "Goeie dag, Thabang!");
-        assertEquals(greet.getUsersCount().size(), 1);
-
-    }
-
-
-    // greetCounter update on greet
-
-    @Test
-    void shouldClearAllUsers() throws Exception {
-        GreetPeople person = new GreetPeople();
-
-        person.greetPerson("Lebo", null);
-        person.greetPerson("John", "Zulu");
-        person.greetPerson(userName, "");
-        person.greetPerson("Lebo", null);
-
-        assertEquals(person.getUsersCount().size(), 3);
-
-        person.clearAllUsers();
-
-        assertEquals(person.getUsersCount().size(), 0);
+        assertEquals(2, greeter.counter());
     }
 
     @Test
-    void shouldClearUser() throws Exception {
-        GreetPeople person = new GreetPeople();
+    void clearAllUsers() {
+        greeter.greetPerson("John", null);
+        greeter.greetPerson("Jonas", null);
 
-        person.greetPerson("Lebo", null);
-        person.greetPerson("John", "Zulu");
-        person.greetPerson(userName, "");
-        person.greetPerson("Lebo", null);
-
-        assertEquals(person.getUsersCount().size(), 3);
-
-        person.clearUser("Lebo");
-
-        assertEquals(person.getUsersCount().size(), 2);
-        System.out.println(person.getUsersCount());
-
+        assertEquals(2, greeter.counter());
+        greeter.clearAllUsers();
+        assertEquals(0, greeter.counter());
     }
 
+    @Test
+    void clearUser() {
+        greeter.greetPerson("John", null);
+        greeter.greetPerson("Jonas", null);
+        greeter.greetPerson("Vince", null);
+
+        assertEquals(3, greeter.counter());
+
+        greeter.clearUser("Jonas");
+        assertEquals(2, greeter.counter());
+
+    }
 }
