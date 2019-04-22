@@ -1,5 +1,7 @@
 package greet;
 
+import greet.greeter.GreetBuilder;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ public class GreetPeople {
     Map<String, Integer> names = new HashMap<>();
 
     StringMethods stringMethods = new StringMethods();
+    GreetBuilder builder = new GreetBuilder();
 
     public String greetPerson(String userName, String language) {
         if(language == null || language.isEmpty()) {
@@ -21,16 +24,8 @@ public class GreetPeople {
         } else {
             names.put(userName, 1);
         }
-        return greetBuilder(userName, language);
+        return builder.greetString(userName, language);
 
-    }
-
-    public String greetBuilder(String Name, String language) {
-        try {
-            return String.format("%s, %s!", Language.valueOf(language).getExpression(), Name);
-        } catch (IllegalArgumentException e) {
-            return String.format("%s, %s!", Language.valueOf("English").getExpression(), Name);
-        }
     }
 
     public int getGreetCounter(String userName) {

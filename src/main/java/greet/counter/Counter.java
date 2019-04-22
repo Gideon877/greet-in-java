@@ -1,13 +1,11 @@
 package greet.counter;
 
-import greet.Language;
 import greet.StringMethods;
+import greet.greeter.GreetBuilder;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-
-import static greet.ConsoleColors.*;
 
 public class Counter {
 
@@ -17,7 +15,6 @@ public class Counter {
     final String COUNT_UPDATE_SQL = "update users set count = count + 1 where name = ?";
     final String CLEAR_COUNT_SQL = "delete from users";
     final String CLEAR_USER_COUNT_SQL = "delete from users where name = ?";
-//    final String COUNT_USER_SQL = "select count(*) as count from users";
 
     final PreparedStatement insertNameAndCountPreparedStatement;
     final PreparedStatement findNamePreparedStatement;
@@ -25,7 +22,6 @@ public class Counter {
     final PreparedStatement findAllPreparedStatement;
     final PreparedStatement clearAllPreparedStatement;
     final PreparedStatement clearUserPreparedStatement;
-//    final PreparedStatement countUserPreparedStatement;
 
     final String GREET_DATABASE_URL = "jdbc:h2:./target/greet_db";
     Connection connection;
@@ -40,7 +36,6 @@ public class Counter {
             updateCountPreparedStatement = connection.prepareStatement(COUNT_UPDATE_SQL);
             clearAllPreparedStatement = connection.prepareStatement(CLEAR_COUNT_SQL);
             clearUserPreparedStatement = connection.prepareStatement(CLEAR_USER_COUNT_SQL);
-//            countUserPreparedStatement = connection.prepareStatement(COUNT_USER_SQL);
     }
 
     public void clearAllUsers() {
@@ -123,6 +118,7 @@ public class Counter {
     }
 
     public String greetPerson(String userName, String language) throws SQLException {
+        GreetBuilder builder = new GreetBuilder();
         if(language == null || language.isEmpty()) {
             language = "English";
         }
@@ -134,20 +130,6 @@ public class Counter {
         } else {
             findAndUpdateUser(userName);
         }
-
-        return greetBuilder(userName, language);
-
-    }
-
-    private String greetBuilder(String Name, String language) {
-        try {
-            return greetFormat( BLACK_BOLD, Language.valueOf(language).getExpression(), Name);
-        } catch (IllegalArgumentException e) {
-            return greetFormat(RED_BOLD_BRIGHT, Language.valueOf("English").getExpression(), Name);
-        }
-    }
-
-    private String  greetFormat(String color, String language, String userName) {
-        return String.format("%s%s, %s!%s", color, language, userName, RESET);
+        return builder.greetString(userName, language);
     }
 }

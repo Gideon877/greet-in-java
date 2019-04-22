@@ -2,6 +2,9 @@ package greet;
 
 import org.junit.jupiter.api.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GreetPeopleTest {
@@ -59,6 +62,10 @@ class GreetPeopleTest {
         assertEquals(0, greeter.getGreetCounter("John"));
         greeter.greetPerson("John", null);
         assertEquals(1, greeter.getGreetCounter("John"));
+
+
+        List<Language> somethingList = Arrays.asList(Language.values());
+        System.out.println(somethingList);
     }
 
     @Test
