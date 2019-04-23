@@ -103,6 +103,7 @@ class CounterTest {
         assertEquals(3, counterTest.usersCounter());
     }
 
+    //greet
     @Test
     void shouldGreetPerson() throws SQLException {
         assertEquals(BLACK_BOLD + "Dumela, Thabang!" + RESET , counterTest.greetPerson(user1, "sotho"));
