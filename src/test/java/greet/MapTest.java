@@ -26,7 +26,7 @@ public class MapTest {
     void mapValues() throws IOException {
         System.out.println(map);
         System.out.println(map.containsKey("John"));
-        System.out.println(getUser("John"));
+//        System.out.println(getUser("John"));
 
 //        Terminal terminal = new DefaultTerminalFactory().createTerminal();
 //        sta
