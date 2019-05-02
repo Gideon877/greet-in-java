@@ -24,7 +24,7 @@ class CommandExtractorTest {
 
             assertEquals("greet", commandExtractor.getCommand());
             assertEquals("Thabang", commandExtractor.getName());
-            assertEquals("Englishes", commandExtractor.getLanguage());
+            assertEquals("English", commandExtractor.getLanguage());
         }
 
         @Test
