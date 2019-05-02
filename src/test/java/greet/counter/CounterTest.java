@@ -1,9 +1,6 @@
 package greet.counter;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
 
@@ -68,7 +65,6 @@ class CounterTest {
     @Test
     void shouldFindUser() throws SQLException {
         assertEquals("{Sandiso=2}", counterTest.findUser(user3).toString());
-
     }
 
     @Test

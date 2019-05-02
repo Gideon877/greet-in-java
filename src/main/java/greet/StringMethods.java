@@ -2,9 +2,9 @@ package greet;
 
 import java.util.*;
 
-public class StringMethods {
-    ConsoleColors consoleColors = new ConsoleColors();
+import static greet.ConsoleColors.*;
 
+public class StringMethods {
     /**
      * @param string
      * @return
@@ -22,12 +22,12 @@ public class StringMethods {
             System.out.printf("%20s" ,"No users found");
             System.out.println();
         } else {
-            System.out.printf("%s%10s : %2s%s",consoleColors.BLUE_BOLD_BRIGHT, "NAME", "COUNT", consoleColors.RESET);
+            System.out.printf("%s%10s : %2s%s", BLUE_BOLD_BRIGHT, "NAME", "COUNT", RESET);
             System.out.println();
             System.out.println(lines);
 
             for (Map.Entry user: users.entrySet()) {
-                System.out.format("%s %10s %s | %s%2d%s", consoleColors.BLACK_BOLD, user.getKey(), consoleColors.RESET, consoleColors.PURPLE_BOLD_BRIGHT, user.getValue(), consoleColors.RESET);
+                System.out.format("%s %10s %s | %s%2d%s", BLACK_BOLD, user.getKey(), RESET, PURPLE_BOLD_BRIGHT, user.getValue(), RESET);
                 System.out.println();
             }
         }

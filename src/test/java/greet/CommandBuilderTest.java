@@ -21,8 +21,11 @@ class CommandBuilderTest {
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        String commands = "greet Thabo";
 
+        command.greet(commands.split(" "));
+        
     }
 
     @AfterEach
@@ -44,19 +47,19 @@ class CommandBuilderTest {
 
     }
 
-    public static class CommandAsker {
-        private final Scanner scanner;
-        private final PrintStream out;
-
-        public CommandAsker(InputStream in, PrintStream out) {
-            scanner = new Scanner(in);
-            this.out = out;
-        }
-
-        public String ask(String message) {
-            out.println(message);
-            return scanner.nextLine();
-        }
-    }
+//    public static class CommandAsker {
+//        private final Scanner scanner;
+//        private final PrintStream out;
+//
+//        public CommandAsker(InputStream in, PrintStream out) {
+//            scanner = new Scanner(in);
+//            this.out = out;
+//        }
+//
+//        public String ask(String message) {
+//            out.println(message);
+//            return scanner.nextLine();
+//        }
+//    }
 
 }

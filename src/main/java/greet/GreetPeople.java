@@ -1,16 +1,19 @@
 package greet;
 
 import greet.greeter.GreetBuilder;
+import greet.greeter.Greeter;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GreetPeople {
+public class GreetPeople  implements Greeter {
     Map<String, Integer> names = new HashMap<>();
 
     StringMethods stringMethods = new StringMethods();
     GreetBuilder builder = new GreetBuilder();
 
+    @Override
     public String greetPerson(String userName, String language) {
         if(language == null || language.isEmpty()) {
             language = "English";
@@ -36,19 +39,29 @@ public class GreetPeople {
         }
     }
 
-    public Map<String, Integer> getUsersCount() {
+    @Override
+    public Map<String, Integer> findAllUsers() {
         return names;
     }
 
-    public int counter() {
+    @Override
+    public Map<String, Integer> findUser(String name) throws SQLException {
+//        names
+        return null;
+    }
+
+    @Override
+    public int usersCounter() {
         return names.size();
     }
 
+    @Override
     public void clearAllUsers() {
         names.clear();
     }
 
-    public void clearUser(String userName) {
+    @Override
+    public void clearUserByUsername(String userName) {
         names.remove(userName);
     }
 }

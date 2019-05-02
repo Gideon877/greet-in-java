@@ -8,11 +8,12 @@ import java.util.Scanner;
 import static greet.ConsoleColors.*;
 
 public class CommandBuilder {
-    Counter db = new Counter();
+    Counter db;
+//    GreetPeople db = new GreetPeople();
+
     StringMethods stringMethods = new StringMethods();
 
-    public CommandBuilder() throws SQLException, ClassNotFoundException {
-    }
+    public CommandBuilder() throws SQLException, ClassNotFoundException { db = new Counter(); }
 
     public void menu() throws Exception {
         Scanner input =  new Scanner(System.in);
@@ -64,7 +65,7 @@ public class CommandBuilder {
         }
     }
 
-    private void counter() throws Exception {
+    public void counter() throws Exception {
         try {
             System.out.println("--------------------------");
             System.out.printf("%20s %s%s%s", "Users greeted:", CYAN_BOLD , db.usersCounter(), RESET);
@@ -75,7 +76,7 @@ public class CommandBuilder {
         }
     }
 
-    private void greet(String[] commandParts) throws Exception {
+    public void greet(String[] commandParts) throws Exception {
         String message = "", userName = "", language ="";
         try {
             if(commandParts.length == 2) {
@@ -143,3 +144,13 @@ public class CommandBuilder {
         System.out.println();
     }
 }
+
+
+
+//         commandExtractor = new CommandExtractor(commandInput);
+//                 commandProcessor = new CommandProcessor(commandExtractor);
+//
+//
+//                 if(!commandProcessor.menu().isEmpty()) {
+//                 System.out.println(commandProcessor.menu());
+//                 }

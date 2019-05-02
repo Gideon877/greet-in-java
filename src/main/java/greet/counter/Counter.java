@@ -2,12 +2,13 @@ package greet.counter;
 
 import greet.StringMethods;
 import greet.greeter.GreetBuilder;
+import greet.greeter.Greeter;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Counter {
+public class Counter implements Greeter {
 
     final String USER_INSERT_SQL = "insert into users (name, count) values (?, ?)";
     final String FIND_ALL_USERS_SQL = "select * from users";
@@ -38,6 +39,7 @@ public class Counter {
             clearUserPreparedStatement = connection.prepareStatement(CLEAR_USER_COUNT_SQL);
     }
 
+    @Override
     public void clearAllUsers() {
         try {
             clearAllPreparedStatement.execute();
@@ -59,7 +61,7 @@ public class Counter {
     }
 
     public Map<String, Integer> findUser(String userName) throws SQLException {
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>(); // {Jan=1}
         try {
             findNamePreparedStatement.setString(1, userName);
             ResultSet rs = findNamePreparedStatement.executeQuery();
@@ -78,7 +80,6 @@ public class Counter {
     public int findAndUpdateUser(String userName){
         try {
             updateCountPreparedStatement.setString(1, userName);
-
             return updateCountPreparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error occured! " + e);
@@ -88,6 +89,7 @@ public class Counter {
         return 0;
     }
 
+    @Override
     public Map<String, Integer> findAllUsers() {
         Map<String, Integer> map = new HashMap<>();
         try {
@@ -104,6 +106,7 @@ public class Counter {
         return map;
     }
 
+    @Override
     public void clearUserByUsername(String userName) {
         try {
             clearUserPreparedStatement.setString(1, userName);
@@ -113,10 +116,12 @@ public class Counter {
         }
     }
 
+    @Override
     public int usersCounter() {
         return findAllUsers().size();
     }
 
+    @Override
     public String greetPerson(String userName, String language) throws SQLException {
         GreetBuilder builder = new GreetBuilder();
         if(language == null || language.isEmpty()) {

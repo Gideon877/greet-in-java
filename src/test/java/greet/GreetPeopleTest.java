@@ -76,7 +76,7 @@ class GreetPeopleTest {
         greeter.greetPerson("Jonas", null);
         greeter.greetPerson("Vince", null);
 
-        assertEquals("{Vince=1, John=1, Jonas=1}", greeter.getUsersCount().toString());
+        assertEquals("{Vince=1, John=1, Jonas=1}", greeter.findAllUsers().toString());
     }
 
     @Test
@@ -84,7 +84,7 @@ class GreetPeopleTest {
         greeter.greetPerson("John", null);
         greeter.greetPerson("Jonas", null);
 
-        assertEquals(2, greeter.counter());
+        assertEquals(2, greeter.usersCounter());
     }
 
     @Test
@@ -92,9 +92,9 @@ class GreetPeopleTest {
         greeter.greetPerson("John", null);
         greeter.greetPerson("Jonas", null);
 
-        assertEquals(2, greeter.counter());
+        assertEquals(2, greeter.usersCounter());
         greeter.clearAllUsers();
-        assertEquals(0, greeter.counter());
+        assertEquals(0, greeter.usersCounter());
     }
 
     @Test
@@ -103,10 +103,10 @@ class GreetPeopleTest {
         greeter.greetPerson("Jonas", null);
         greeter.greetPerson("Vince", null);
 
-        assertEquals(3, greeter.counter());
+        assertEquals(3, greeter.usersCounter());
 
-        greeter.clearUser("Jonas");
-        assertEquals(2, greeter.counter());
+        greeter.clearUserByUsername("Jonas");
+        assertEquals(2, greeter.usersCounter());
 
     }
 }
