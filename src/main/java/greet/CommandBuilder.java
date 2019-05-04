@@ -9,11 +9,13 @@ import static greet.ConsoleColors.*;
 
 public class CommandBuilder {
     Counter db;
-//    GreetPeople db = new GreetPeople();
+//    GreetPeople db;
 
     StringMethods stringMethods = new StringMethods();
 
-    public CommandBuilder() throws SQLException, ClassNotFoundException { db = new Counter(); }
+    public CommandBuilder() throws SQLException, ClassNotFoundException {
+//        db = new GreetPeople();
+        db = new Counter(); }
 
     public void menu() throws Exception {
         Scanner input =  new Scanner(System.in);

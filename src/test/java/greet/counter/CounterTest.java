@@ -26,6 +26,7 @@ class CounterTest {
 
     @BeforeAll
     static void enroll() {
+        System.out.println(counterTest.findAllUsers());
         counterTest.clearAllUsers();
     }
 

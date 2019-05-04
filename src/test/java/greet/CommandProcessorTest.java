@@ -1,40 +1,46 @@
 package greet;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledIf;
 
 import java.sql.SQLException;
 
-import static greet.ConsoleColors.BLACK_BOLD;
-import static greet.ConsoleColors.RESET;
+import static greet.ConsoleColors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandProcessorTest {
     @Nested
     @DisplayName("process")
     class processGreetCommand {
-        @Test
+        @BeforeEach
         void getGreet() throws Exception {
             CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("greet thabang xhosa"));
             assertEquals("greet", commandProcessor.getCommand());
             assertEquals("Xhosa", commandProcessor.getLanguage());
             assertEquals("Thabang", commandProcessor.getName());
             assertEquals(BLACK_BOLD + "Molo, Thabang!" + RESET, commandProcessor.menu());
+            assertEquals(BLACK_BOLD + "Molo, Thabang!" + RESET, commandProcessor.menu());
+        }
+
+        @AfterEach
+        void cleanUp() throws Exception {
+            CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("clear thabang"));
+            commandProcessor.menu();
         }
 
         @Test
-        @Disabled("database error")
         void getGreeted() throws Exception{
             CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("greeted"));
             assertEquals("greeted", commandProcessor.getCommand());
-            assertEquals("{Thabang=1}", commandProcessor.menu());
+            assertEquals("{Thabang=2}", commandProcessor.menu());
         }
 
         @Test
-        @Disabled("database error")
         void getGreetedUser() throws Exception{
             CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("greeted Thabang"));
             assertEquals("greeted", commandProcessor.getCommand());
-            assertEquals("1", commandProcessor.menu());
+            String msg = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, commandProcessor.getName(), RESET, CYAN_BOLD , 2, RESET);
+            assertEquals(msg, commandProcessor.menu());
         }
     }
 

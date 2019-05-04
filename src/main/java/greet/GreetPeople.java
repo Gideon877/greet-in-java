@@ -46,8 +46,12 @@ public class GreetPeople  implements Greeter {
 
     @Override
     public Map<String, Integer> findUser(String name) throws SQLException {
-//        names
-        return null;
+        Map<String, Integer> user = new HashMap<>();
+        if(names.get(name).equals(null)) {
+            return user;
+        }
+        user.put(name, names.get(name));
+        return user;
     }
 
     @Override

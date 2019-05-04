@@ -8,6 +8,8 @@ public class StringMethods {
     /**
      * @param string
      * @return
+     * @author: Thabang Gideon Magaola
+     * email: gideon877@live.com
      */
     public String Capitalize(String string) {
         string = string.toLowerCase();
@@ -32,5 +34,52 @@ public class StringMethods {
             }
         }
         System.out.println(lines);
+    }
+
+    private static void goodbye() {
+        System.out.println("--------------------");
+        System.out.printf("%s%15s%s\n", BLUE_BOLD_BRIGHT, "goodbye!", RESET);
+        System.out.println("--------------------");
+    }
+
+    protected static void help() {
+        String help, title, greet, greeted, greetedName, counter, clear, clearUsers, exit;
+
+        title = GREEN_BOLD + "Valid commands are:\n\n";
+        greet = PURPLE_BOLD + "greet " + RESET + "followed by the " + YELLOW_BOLD + "name"+ RESET + " and the " + CYAN_BOLD + "language" + RESET + " the user is to be greeted in,\n";
+        greeted = helpStringBuilder("greeted", "display a list of all users that has been greeted and how many time each user has been greeted,\n");
+        greetedName = helpStringBuilderTwo("greeted", "followed by a","username", "returns how many times that username have been greeted,\n");
+        clear = helpStringBuilder("clear", "deletes of all users greeted and the reset the greet counter to 0,\n");
+        counter = helpStringBuilder("counter", "returns a count of how many unique users has been greeted,\n");
+        clearUsers = helpStringBuilderTwo("clear", "followed by a","username","delete the greet counter for the specified user and decrement the greet counter by 1,\n");
+        exit = helpStringBuilder("exit", "exits the application,\n");
+        help = helpStringBuilder("help", "shows a user an overview of all possible commands.\n\n");
+
+        System.out.printf("%s%s%s%s%s%s%s%s%s%s", title, RESET, greet, greeted, greetedName, counter, clear, clearUsers, exit, help);
+    }
+
+    private static String helpStringBuilder(String command, String sentence) {
+        return String.format("%s%s%s %s", PURPLE_BOLD, command, RESET, sentence);
+    }
+
+    private static String helpStringBuilderTwo(String command, String sentence, String commandTwo, String sentenceTwo) {
+        return String.format("%s%s%s %s %s%s%s %s", PURPLE_BOLD, command, RESET, sentence, PURPLE_BOLD, commandTwo, RESET, sentenceTwo);
+    }
+
+    protected String invalid(String getCommand) {
+        String appName = WHITE_BOLD + "greet-in-java:" + RESET;
+        String command = RED_UNDERLINED + getCommand + RESET;
+        return String.format("%s %s%s %s%s %s%s%s ", appName, command, RED, "command not found:", RESET, GREEN ,"\ntype help for all possible commands", RESET);
+    }
+
+    public void counter(int count) {
+        try {
+            System.out.println("--------------------------");
+            System.out.printf("%20s %s%s%s", "Users greeted:", CYAN_BOLD , count, RESET);
+            System.out.println();
+            System.out.println("--------------------------");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

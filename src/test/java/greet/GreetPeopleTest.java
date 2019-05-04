@@ -5,11 +5,12 @@ import org.junit.jupiter.api.*;
 import java.util.Arrays;
 import java.util.List;
 
+import static greet.ConsoleColors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GreetPeopleTest {
     GreetPeople greeter = new GreetPeople();
-    @Disabled("need bug fix")
+
     @Nested
     @DisplayName("when command is greet")
     class GreetPerson {
@@ -25,13 +26,13 @@ class GreetPeopleTest {
         @Test
         @DisplayName("greet person with default language")
         void greetPerson() {
-            assertEquals("Hello, Dan!" , greet.greetPerson(userOne, null));
+            assertEquals(BLACK_BOLD + "Hello, Dan!" + RESET , greet.greetPerson(userOne, null));
         }
 
         @Test
         @DisplayName("greet person in Zulu")
         void greetPersonInZulu() {
-            assertEquals("Sawubona, Dan!" , greet.greetPerson(userOne, zulu));
+            assertEquals(BLACK_BOLD + "Sawubona, Dan!" + RESET , greet.greetPerson(userOne, zulu));
         }
     }
 
