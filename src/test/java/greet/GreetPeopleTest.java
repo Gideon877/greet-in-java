@@ -36,7 +36,7 @@ class GreetPeopleTest {
         }
     }
 
-    @Disabled("need bug fix")
+//    @Disabled("need bug fix")
     @Nested
     @DisplayName("when greetBuilder is executed")
     class greetBuilder {
@@ -50,12 +50,12 @@ class GreetPeopleTest {
         @Test
         @DisplayName("greet person in Sotho")
         void greetPersonInSotho() {
-            assertEquals("Dumela, Dan!" , greet.greetPerson("Dan", "Sotho"));
+            assertEquals(BLACK_BOLD + "Dumela, Dan!" + RESET , greet.greetPerson("Dan", "Sotho"));
         }
         @Test
         @DisplayName("greet person with default language")
         void greetPerson() {
-            assertEquals("Hello, Dan!" , greet.greetPerson("Dan", null));
+            assertEquals(BLACK_BOLD + "Hello, Dan!" + RESET , greet.greetPerson("Dan", null));
         }
 
     }
