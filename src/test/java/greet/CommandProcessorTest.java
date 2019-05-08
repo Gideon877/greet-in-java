@@ -24,15 +24,17 @@ class CommandProcessorTest {
 
         @AfterEach
         void cleanUp() throws Exception {
-            CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("clear thabang"));
+            CommandExtractor commandExtractor = new CommandExtractor("clear thabang");
+            CommandProcessor commandProcessor = new CommandProcessor(commandExtractor);
             commandProcessor.menu();
+
+
         }
 
         @Test
         void getGreeted() throws Exception{
             CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("greeted"));
-            assertEquals("greeted", commandProcessor.getCommand());
-//            assertEquals("{Thabang=2}", commandProcessor.menu());
+//            assertEquals("greeted", commandProcessor.getCommand());
         }
 
         @Test

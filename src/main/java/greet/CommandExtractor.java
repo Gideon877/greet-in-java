@@ -41,4 +41,8 @@ public class CommandExtractor {
     public String getName() {
         return name;
     }
+
+    public boolean hasName() {
+        return !name.isEmpty();
+    }
 }

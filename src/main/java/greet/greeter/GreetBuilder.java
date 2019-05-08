@@ -10,7 +10,7 @@ public class GreetBuilder {
         try {
             return greetFormat( BLACK_BOLD, Language.valueOf(language).getExpression(), Name);
         } catch (IllegalArgumentException e) {
-            return greetFormat(RED_BOLD_BRIGHT, Language.valueOf("English").getExpression(), Name);
+            return greetFormat(RED_BOLD_BRIGHT, Language.valueOf("Zulu").getExpression(), Name);
         }
     }
     private String greetFormat(String color, String language, String userName) {

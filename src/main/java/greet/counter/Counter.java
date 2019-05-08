@@ -2,13 +2,13 @@ package greet.counter;
 
 import greet.StringMethods;
 import greet.greeter.GreetBuilder;
-import greet.greeter.Greeter;
+import greet.greeter.Greet;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Counter implements Greeter {
+public class Counter implements Greet {
 
     final String USER_INSERT_SQL = "insert into users (name, count) values (?, ?)";
     final String FIND_ALL_USERS_SQL = "select * from users";
@@ -60,8 +60,8 @@ public class Counter implements Greeter {
         }
     }
 
-    public Map<String, Integer> findUser(String userName) throws SQLException {
-        Map<String, Integer> map = new HashMap<>(); // {Jan=1}
+    public Map<String, Integer> findUser(String userName) {
+        Map<String, Integer> map = new HashMap<>();
         try {
             findNamePreparedStatement.setString(1, userName);
             ResultSet rs = findNamePreparedStatement.executeQuery();
@@ -122,17 +122,20 @@ public class Counter implements Greeter {
     }
 
     @Override
-    public String greetPerson(String userName, String language) throws SQLException {
+    public String greetPerson(String userName, String language) {
         GreetBuilder builder = new GreetBuilder();
         if(language == null || language.isEmpty()) {
-            language = "English";
+            language = "Zulu";
         }
+        // capitalizing language and name.
         language = stringMethods.Capitalize(language);
         userName = stringMethods.Capitalize(userName);
 
+        //checks if user/name is in the database
         if(findUser(userName).isEmpty()) {
-            addNewUser(userName);
+            addNewUser(userName); // if name have not added, we add it
         } else {
+            // updating existing name count by incrementing by 1.
             findAndUpdateUser(userName);
         }
         return builder.greetString(userName, language);

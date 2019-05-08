@@ -1,22 +1,23 @@
 package greet;
 
 import greet.counter.Counter;
+import greet.greeter.Greet;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import static greet.ConsoleColors.*;
 
 public class CommandProcessor {
     private final CommandExtractor commandExtractor;
-    Counter db;
+    Greet db;
     StringMethods stringMethods;
-//    GreetPeople db;
 
     public CommandProcessor(CommandExtractor commandExtractor) throws SQLException, ClassNotFoundException {
         this.commandExtractor = commandExtractor;
-        db = new Counter();
+        db = new Counter(); // connecting to h2 database
+//        db = new GreetPeople(); // using HashMap
         stringMethods = new StringMethods();
-//        db = new GreetPeople();
     }
 
     public String menu() throws Exception {
@@ -33,25 +34,31 @@ public class CommandProcessor {
         } else if(getCommand().equalsIgnoreCase("help")) {
             stringMethods.help();
             return "";
-        } else {
+        } else if(getCommand().equalsIgnoreCase("x")) {
+            stringMethods.FormatLanguage();
+            return "";
+        }else {
+            System.out.println(stringMethods.invalid(getCommand()));
             return stringMethods.invalid(getCommand());
         }
     }
 
     private String greeted() throws Exception {
-        System.out.println(getName().isEmpty());
-        if(getName().isEmpty()) {
-            stringMethods.Format(db.findAllUsers());
-            return db.findAllUsers().toString();
-        } else  {
-            int counter = 0;
-
-            System.out.println(db.findUser(getName()) + " greeted ");
-            if(!db.findUser(getName()).equals(null)) {
-                counter = db.findUser(getName()).get(getName());
+        if(hasName()) {
+            Map<String, Integer> userFound = db.findUser(getName());
+            try {
+                int counter = userFound.get(getName());
+                String greetedMessage = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , counter, RESET);
+                System.out.println(greetedMessage);
+                return greetedMessage;
+            } catch (NullPointerException e) {
+                String greetedMessage = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , 0, RESET);
+                System.out.println(greetedMessage);
+                return greetedMessage;
             }
-            return String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD ,counter, RESET);
         }
+        stringMethods.Format(db.findAllUsers());
+        return db.findAllUsers().toString();
     }
 
     public void counter()  {
@@ -60,21 +67,28 @@ public class CommandProcessor {
 
     public String greet() {
         try {
-            return db.greetPerson(getName(), getLanguage()); //Language.valueOf(language).getExpression() + ", " + userName;
+            String greetMessage = db.greetPerson(getName(), getLanguage());
+            System.out.println(greetMessage);
+            return greetMessage; //Language.valueOf(language).getExpression() + ", " + userName;
         } catch (Exception e) {
+            System.out.println(stringMethods.invalid(getCommand()));
             return stringMethods.invalid(getCommand());
         }
     }
 
     private void clear() {
         try {
-            if(getName().isEmpty()) {
-                db.clearAllUsers();
-            } else {
+            if(hasName()) {
                 db.clearUserByUsername(getName());
+            } else {
+                db.clearAllUsers();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if(hasName()) {
+                System.out.println("failed to clear name: " + getName());
+            } else {
+                System.out.println("failed to clear all users");
+            }
         }
     }
 
@@ -88,5 +102,9 @@ public class CommandProcessor {
 
     public String getLanguage() {
         return this.commandExtractor.getLanguage();
+    }
+
+    private boolean hasName() {
+        return this.commandExtractor.hasName();
     }
 }

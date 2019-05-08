@@ -26,7 +26,6 @@ class CounterTest {
 
     @BeforeAll
     static void enroll() {
-        System.out.println(counterTest.findAllUsers());
         counterTest.clearAllUsers();
     }
 
@@ -109,13 +108,13 @@ class CounterTest {
 
     @Test
     void shouldGreetPersonWithDefault() throws SQLException {
-        assertEquals(BLACK_BOLD + "Hello, Jonas!" + RESET , counterTest.greetPerson(user2, null));
+        assertEquals(BLACK_BOLD + "Sawubona, Jonas!" + RESET , counterTest.greetPerson(user2, null));
         assertEquals(2, counterTest.usersCounter());
     }
 
     @Test
     void shouldGreetPersonWithDefaultIfNoLanguageFound() throws SQLException {
-        assertEquals(RED_BOLD_BRIGHT + "Hello, Jonas!" + RESET , counterTest.greetPerson(user2, "french"));
+        assertEquals(RED_BOLD_BRIGHT + "Sawubona, Jonas!" + RESET , counterTest.greetPerson(user2, "french"));
         assertEquals(2, counterTest.usersCounter());
 
     }

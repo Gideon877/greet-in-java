@@ -1,13 +1,15 @@
 package greet;
 
 import greet.greeter.GreetBuilder;
-import greet.greeter.Greeter;
+import greet.greeter.Greet;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GreetPeople  implements Greeter {
+import static greet.Language.Zulu;
+
+public class GreetPeople  implements Greet {
     Map<String, Integer> names = new HashMap<>();
 
     StringMethods stringMethods = new StringMethods();
@@ -16,7 +18,7 @@ public class GreetPeople  implements Greeter {
     @Override
     public String greetPerson(String userName, String language) {
         if(language == null || language.isEmpty()) {
-            language = "English";
+            language = Zulu.toString();
         }
 
         language = stringMethods.Capitalize(language);

@@ -3,7 +3,7 @@ package greet.greeter;
 import java.sql.SQLException;
 import java.util.Map;
 
-public interface Greeter {
+public interface Greet {
     void clearAllUsers();
     void clearUserByUsername(String userName);
     int usersCounter();

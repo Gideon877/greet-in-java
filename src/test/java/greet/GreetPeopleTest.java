@@ -26,39 +26,16 @@ class GreetPeopleTest {
         @Test
         @DisplayName("greet person with default language")
         void greetPerson() {
-            assertEquals(BLACK_BOLD + "Hello, Dan!" + RESET , greet.greetPerson(userOne, null));
+            assertEquals(BLACK_BOLD + "Sawubona, Dan!" + RESET , greet.greetPerson(userOne, null));
         }
 
         @Test
-        @DisplayName("greet person in Zulu")
+        @DisplayName("greet person in English")
         void greetPersonInZulu() {
-            assertEquals(BLACK_BOLD + "Sawubona, Dan!" + RESET , greet.greetPerson(userOne, zulu));
+            assertEquals(BLACK_BOLD + "Hello, Dan!" + RESET , greet.greetPerson(userOne, "English"));
         }
     }
 
-//    @Disabled("need bug fix")
-    @Nested
-    @DisplayName("when greetBuilder is executed")
-    class greetBuilder {
-        GreetPeople greet;
-
-        @BeforeEach
-        void setClass() {
-            greet = new GreetPeople();
-        }
-
-        @Test
-        @DisplayName("greet person in Sotho")
-        void greetPersonInSotho() {
-            assertEquals(BLACK_BOLD + "Dumela, Dan!" + RESET , greet.greetPerson("Dan", "Sotho"));
-        }
-        @Test
-        @DisplayName("greet person with default language")
-        void greetPerson() {
-            assertEquals(BLACK_BOLD + "Hello, Dan!" + RESET , greet.greetPerson("Dan", null));
-        }
-
-    }
 
     @Test
     void getGreetCounter() {
@@ -67,8 +44,8 @@ class GreetPeopleTest {
         assertEquals(1, greeter.getGreetCounter("John"));
 
 
-        List<Language> somethingList = Arrays.asList(Language.values());
-        System.out.println(somethingList);
+//        List<Language> somethingList = Arrays.asList(Language.values());
+//        System.out.println(somethingList);
     }
 
     @Test

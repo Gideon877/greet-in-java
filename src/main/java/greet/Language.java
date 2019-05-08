@@ -4,7 +4,7 @@ public enum Language {
     English("Hello"),
     Tswana("Dumela"),
     Sotho("Dumela"),
-    Pedi("Dumela"),
+    Pedi("Thobela"),
     Xhosa("Molo"),
     Afrikaans("Goeie dag"),
     Tsonga("Avuxeni"),
