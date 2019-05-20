@@ -1,5 +1,6 @@
 package greet;
 
+import greet.greeter.Greet;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIf;
 
@@ -9,12 +10,13 @@ import static greet.ConsoleColors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandProcessorTest {
+    Greet db = new GreetPeople();
     @Nested
     @DisplayName("process")
     class processGreetCommand {
         @BeforeEach
         void getGreet() throws Exception {
-            CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("greet thabang xhosa"));
+            CommandProcessor commandProcessor = new CommandProcessor(db, new CommandExtractor("greet thabang xhosa"));
             assertEquals("greet", commandProcessor.getCommand());
             assertEquals("Xhosa", commandProcessor.getLanguage());
             assertEquals("Thabang", commandProcessor.getName());
@@ -25,7 +27,7 @@ class CommandProcessorTest {
         @AfterEach
         void cleanUp() throws Exception {
             CommandExtractor commandExtractor = new CommandExtractor("clear thabang");
-            CommandProcessor commandProcessor = new CommandProcessor(commandExtractor);
+            CommandProcessor commandProcessor = new CommandProcessor(db, commandExtractor);
             commandProcessor.menu();
 
 
@@ -33,13 +35,13 @@ class CommandProcessorTest {
 
         @Test
         void getGreeted() throws Exception{
-            CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("greeted"));
+            CommandProcessor commandProcessor = new CommandProcessor(db, new CommandExtractor("greeted"));
 //            assertEquals("greeted", commandProcessor.getCommand());
         }
 
         @Test
         void getGreetedUser() throws Exception{
-            CommandProcessor commandProcessor = new CommandProcessor(new CommandExtractor("greeted Thabang"));
+            CommandProcessor commandProcessor = new CommandProcessor(db, new CommandExtractor("greeted Thabang"));
             assertEquals("greeted", commandProcessor.getCommand());
             String msg = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, commandProcessor.getName(), RESET, CYAN_BOLD , 2, RESET);
             assertEquals(msg, commandProcessor.menu());

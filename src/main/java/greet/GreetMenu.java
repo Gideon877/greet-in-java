@@ -6,4 +6,6 @@ public class GreetMenu {
         command.menu();
     }
 }
+
+//        mvn dependency:copy-dependencies
 //        java -cp .:target/*: greet.GreetMenu

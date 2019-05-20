@@ -10,14 +10,12 @@ import static greet.ConsoleColors.*;
 
 public class CommandProcessor {
     private final CommandExtractor commandExtractor;
-    Greet db;
-    StringMethods stringMethods;
+    private final Greet db;
+    StringMethods stringMethods = new StringMethods();
 
-    public CommandProcessor(CommandExtractor commandExtractor) throws SQLException, ClassNotFoundException {
+    public CommandProcessor(Greet db, CommandExtractor commandExtractor) throws SQLException, ClassNotFoundException {
         this.commandExtractor = commandExtractor;
-        db = new Counter(); // connecting to h2 database
-//        db = new GreetPeople(); // using HashMap
-        stringMethods = new StringMethods();
+        this.db = db;
     }
 
     public String menu() throws Exception {
@@ -38,7 +36,6 @@ public class CommandProcessor {
             stringMethods.FormatLanguage();
             return "";
         }else {
-            System.out.println(stringMethods.invalid(getCommand()));
             return stringMethods.invalid(getCommand());
         }
     }
@@ -49,11 +46,9 @@ public class CommandProcessor {
             try {
                 int counter = userFound.get(getName());
                 String greetedMessage = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , counter, RESET);
-                System.out.println(greetedMessage);
                 return greetedMessage;
             } catch (NullPointerException e) {
                 String greetedMessage = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , 0, RESET);
-                System.out.println(greetedMessage);
                 return greetedMessage;
             }
         }
@@ -68,10 +63,8 @@ public class CommandProcessor {
     public String greet() {
         try {
             String greetMessage = db.greetPerson(getName(), getLanguage());
-            System.out.println(greetMessage);
             return greetMessage; //Language.valueOf(language).getExpression() + ", " + userName;
         } catch (Exception e) {
-            System.out.println(stringMethods.invalid(getCommand()));
             return stringMethods.invalid(getCommand());
         }
     }

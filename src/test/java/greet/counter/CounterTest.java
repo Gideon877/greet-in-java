@@ -2,7 +2,11 @@ package greet.counter;
 
 import org.junit.jupiter.api.*;
 
+import javax.swing.plaf.nimbus.State;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import static greet.ConsoleColors.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,8 +29,9 @@ class CounterTest {
     final String user3 = "Sandiso";
 
     @BeforeAll
-    static void enroll() {
+    static void enroll() throws SQLException {
         counterTest.clearAllUsers();
+
     }
 
     @BeforeEach
@@ -79,6 +84,9 @@ class CounterTest {
     void shouldFindAllUsers() {
         counterTest.addNewUser(user1);
         assertEquals("{Sandiso=2, Thabang=1}", counterTest.findAllUsers().toString());
+        String name = "";
+
+        System.out.println();
     }
 
     @Test

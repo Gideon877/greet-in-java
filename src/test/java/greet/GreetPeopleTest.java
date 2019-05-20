@@ -33,6 +33,7 @@ class GreetPeopleTest {
         @DisplayName("greet person in English")
         void greetPersonInZulu() {
             assertEquals(BLACK_BOLD + "Hello, Dan!" + RESET , greet.greetPerson(userOne, "English"));
+//            assertEquals(BLACK_BOLD + "Hello, Dan!" + RESET , greet.greetPerson(userOne, "english"));
         }
     }
 

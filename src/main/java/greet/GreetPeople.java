@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static greet.Language.Zulu;
 
-public class GreetPeople  implements Greet {
+public class GreetPeople implements Greet {
     Map<String, Integer> names = new HashMap<>();
 
     StringMethods stringMethods = new StringMethods();
@@ -49,7 +49,7 @@ public class GreetPeople  implements Greet {
     @Override
     public Map<String, Integer> findUser(String name) throws SQLException {
         Map<String, Integer> user = new HashMap<>();
-        if(names.get(name).equals(null)) {
+        if(names.get(name) == null) {
             return user;
         }
         user.put(name, names.get(name));

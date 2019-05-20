@@ -11,6 +11,7 @@ public enum Language {
     Zulu("Sawubona"),
     Swati("Sawubona"),
     Ndebele("Sawubona"),
+    Spanish("Ola"),
     Venda("Ndaa/Aa");
 
     private final String expression;

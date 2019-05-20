@@ -51,7 +51,7 @@ public class StringMethods {
         clear = helpStringBuilder("clear", "deletes of all users greeted and the reset the greet counter to 0,\n");
         counter = helpStringBuilder("counter", "returns a count of how many unique users has been greeted,\n");
         clearUsers = helpStringBuilderTwo("clear", "followed by a","username","delete the greet counter for the specified user and decrement the greet counter by 1,\n");
-        langages = helpStringBuilder("x", "shows all available languages");
+        langages = helpStringBuilder("x", "shows all available languages\n");
         exit = helpStringBuilder("exit", "exits the application,\n");
         help = helpStringBuilder("help", "shows a user an overview of all possible commands.\n\n");
 
