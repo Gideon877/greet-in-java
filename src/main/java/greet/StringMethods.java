@@ -11,6 +11,10 @@ public class StringMethods {
      * @author: Thabang Gideon Magaola
      * email: gideon877@live.com
      */
+
+    StringBuilder builder = new StringBuilder();
+
+
     public String Capitalize(String string) {
         string = string.toLowerCase();
         return string.substring(0, 1).toUpperCase() + string.substring(1);
@@ -18,6 +22,7 @@ public class StringMethods {
 
     public void Format(Map<String, Integer> users){
         String lines = "------------------------";
+        builder.append(lines);
         System.out.println(lines);
 
         if(users.size() == 0) {

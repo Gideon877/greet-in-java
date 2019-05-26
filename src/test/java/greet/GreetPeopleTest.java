@@ -88,4 +88,15 @@ class GreetPeopleTest {
         assertEquals(2, greeter.usersCounter());
 
     }
+
+    @Test
+    void builderTest() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("------------\n");
+        sb.append("GoodBye\n");
+        sb.append("------------\n");
+
+        System.out.println(sb);
+    }
 }

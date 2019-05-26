@@ -52,7 +52,7 @@ public class CommandProcessor {
                 return greetedMessage;
             }
         }
-        stringMethods.Format(db.findAllUsers());
+//        stringMethods.Format(db.findAllUsers());
         return db.findAllUsers().toString();
     }
 

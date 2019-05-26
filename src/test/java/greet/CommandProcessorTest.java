@@ -5,6 +5,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIf;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static greet.ConsoleColors.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,13 +32,16 @@ class CommandProcessorTest {
             CommandProcessor commandProcessor = new CommandProcessor(db, commandExtractor);
             commandProcessor.menu();
 
-
         }
 
         @Test
         void getGreeted() throws Exception{
             CommandProcessor commandProcessor = new CommandProcessor(db, new CommandExtractor("greeted"));
 //            assertEquals("greeted", commandProcessor.getCommand());
+            Map<String, Integer> world = new HashMap<>();
+
+
+            System.out.println(world.get("King"));
         }
 
         @Test
