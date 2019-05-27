@@ -62,8 +62,7 @@ public class CommandProcessor {
 
     public String greet() {
         try {
-            String greetMessage = db.greetPerson(getName(), getLanguage());
-            return greetMessage; //Language.valueOf(language).getExpression() + ", " + userName;
+            return db.greetPerson(getName(), getLanguage()); //Language.valueOf(language).getExpression() + ", " + userName;
         } catch (Exception e) {
             return stringMethods.invalid(getCommand());
         }

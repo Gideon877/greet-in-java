@@ -89,14 +89,14 @@ class GreetPeopleTest {
 
     }
 
-    @Test
-    void builderTest() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("------------\n");
-        sb.append("GoodBye\n");
-        sb.append("------------\n");
-
-        System.out.println(sb);
-    }
+//    @Test
+//    void builderTest() {
+//        StringBuilder sb = new StringBuilder();
+//
+//        sb.append("------------\n");
+//        sb.append("GoodBye\n");
+//        sb.append("------------\n");
+//
+//        System.out.println(sb);
+//    }
 }

@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class CommandBuilder {
     StringMethods app = new StringMethods();
     public void menu() throws Exception {
-        Greet db = new GreetPeople();
+        Greet db = new Counter();
         Scanner input =  new Scanner(System.in);
 
         boolean exitNow = true;

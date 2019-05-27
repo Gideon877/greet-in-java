@@ -138,6 +138,6 @@ public class Counter implements Greet {
             // updating existing name count by incrementing by 1.
             findAndUpdateUser(userName);
         }
-        return builder.greetString(userName, language);
+        return builder.greetPerson.greet(userName, language);
     }
 }

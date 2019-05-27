@@ -38,10 +38,6 @@ class CommandProcessorTest {
         void getGreeted() throws Exception{
             CommandProcessor commandProcessor = new CommandProcessor(db, new CommandExtractor("greeted"));
 //            assertEquals("greeted", commandProcessor.getCommand());
-            Map<String, Integer> world = new HashMap<>();
-
-
-            System.out.println(world.get("King"));
         }
 
         @Test

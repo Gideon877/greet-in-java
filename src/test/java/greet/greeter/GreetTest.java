@@ -20,16 +20,16 @@ class GreetTest {
 //        verify(myList, times(1)).add(1, "real");
 //    }
 
-    @Test
-    void spies() {
-        String language = "English";
-        try{
-            System.out.println(Language.valueOf(language).getExpression() + ", Thabang");
-        } catch (Exception e) {
-            System.out.println(Language.valueOf("Zulu").getExpression() + ", Thabang");
-        }
-
-    }
+//    @Test
+//    void spies() {
+//        String language = "English";
+//        try{
+//            System.out.println(Language.valueOf(language).getExpression() + ", Thabang");
+//        } catch (Exception e) {
+//            System.out.println(Language.valueOf("Zulu").getExpression() + ", Thabang");
+//        }
+//
+//    }
 
 
 }

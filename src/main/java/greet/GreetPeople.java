@@ -29,7 +29,7 @@ public class GreetPeople implements Greet {
         } else {
             names.put(userName, 1);
         }
-        return builder.greetString(userName, language);
+        return builder.greetPerson.greet(userName, language);
 
     }
 
