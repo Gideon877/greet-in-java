@@ -6,6 +6,9 @@
     <groupId>net.greet</groupId>
     <artifactId>greet-in-java</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Greeting-Console-App</name>
+    <description>Greet person with different languages</description>
     <build>
         <plugins>
             <plugin>
