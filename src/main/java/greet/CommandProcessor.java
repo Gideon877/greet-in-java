@@ -41,14 +41,11 @@ public class CommandProcessor {
             Map<String, Integer> userFound = db.findUser(getName());
             try {
                 int counter = userFound.get(getName());
-                String greetedMessage = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , counter, RESET);
-                return greetedMessage;
+                return String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , counter, RESET);
             } catch (NullPointerException e) {
-                String greetedMessage = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , 0, RESET);
-                return greetedMessage;
+                return String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , 0, RESET);
             }
         }
-//        stringMethods.Format(db.findAllUsers());
         return db.findAllUsers().toString();
     }
 
