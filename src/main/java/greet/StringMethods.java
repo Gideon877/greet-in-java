@@ -2,7 +2,7 @@ package greet;
 
 import java.util.*;
 
-import static greet.ConsoleColors.*;
+import static greet.Colors.*;
 
 public class StringMethods {
     /**
@@ -13,7 +13,7 @@ public class StringMethods {
      */
 
     StringBuilder builder = new StringBuilder();
-
+    private final String lines = "------------------------------------------------\n";
 
     public String Capitalize(String string) {
         string = string.toLowerCase();
@@ -21,7 +21,7 @@ public class StringMethods {
     }
 
     public void Format(Map<String, Integer> users){
-        String lines = "------------------------";
+        String lines = "------------------------------------------------";
         builder.append(lines);
         System.out.println(lines);
 
@@ -42,12 +42,12 @@ public class StringMethods {
     }
 
     protected static void goodbye() {
-        System.out.println("--------------------");
+        System.out.println("------------------------------------------------");
         System.out.printf("%s%15s%s\n", BLUE_BOLD_BRIGHT, "goodbye!", RESET);
-        System.out.println("--------------------");
+        System.out.println("------------------------------------------------");
     }
 
-    protected static void help() {
+    protected static String help() {
         String help, title, greet, greeted, greetedName, counter, clear, clearUsers, exit, langages;
         title = GREEN_BOLD + "Valid commands are:\n\n";
         greet = PURPLE_BOLD + "greet " + RESET + "followed by the " + YELLOW_BOLD + "name"+ RESET + " and the " + CYAN_BOLD + "language" + RESET + " the user is to be greeted in,\n";
@@ -60,7 +60,7 @@ public class StringMethods {
         exit = helpStringBuilder("exit", "exits the application,\n");
         help = helpStringBuilder("help", "shows a user an overview of all possible commands.\n\n");
 
-        System.out.printf("%s%s%s%s%s%s%s%s%s%s%s", title, RESET, greet, greeted, greetedName, counter, clear, clearUsers, langages, exit, help);
+        return String.format("%s%s%s%s%s%s%s%s%s%s%s", title, RESET, greet, greeted, greetedName, counter, clear, clearUsers, langages, exit, help);
     }
 
     private static String helpStringBuilder(String command, String sentence) {
@@ -77,34 +77,29 @@ public class StringMethods {
         return String.format("%s %s%s %s%s %s%s%s ", appName, command, RED, "command not found:", RESET, GREEN ,"\ntype help for all possible commands", RESET);
     }
 
-    public void FormatLanguage(){
+    public String FormatLanguage(){
+        StringBuilder sBuilder = new StringBuilder();
         List<Language> languageList = Arrays.asList(Language.values());
-        String lines = "------------------------";
-        System.out.println(lines);
-
+        sBuilder.append(lines);
         if(languageList.size() == 0) {
-            System.out.printf("%20s" ,"No language found");
-            System.out.println();
+            sBuilder.append(String.format("%20s\n" ,"No language found"));
         } else {
-            System.out.printf("%s %2s %s", BLUE_BOLD_BRIGHT, "LANGUAGES", RESET);
-            System.out.println();
-            System.out.println(lines);
+
+            sBuilder.append(String.format("%s %2s %s\n", BLUE_BOLD_BRIGHT, "LANGUAGES", RESET));
+            sBuilder.append(lines);
             for (Language language: languageList) {
-                System.out.format("%s * %s %s%2s%s", BLACK_BOLD, RESET, PURPLE_BOLD_BRIGHT, language, RESET);
-                System.out.println();
+                sBuilder.append(String.format("%s * %s %s%2s%s\n", BLACK_BOLD, RESET, PURPLE_BOLD_BRIGHT, language, RESET));
             }
         }
-        System.out.println(lines);
+        sBuilder.append("------------------------------------------------");
+        return sBuilder.toString();
     }
 
-    public void counter(int count) {
+    public String counter(int count) {
         try {
-            System.out.println("--------------------------");
-            System.out.printf("%20s %s%s%s", "Users greeted:", CYAN_BOLD , count, RESET);
-            System.out.println();
-            System.out.println("--------------------------");
+            return String.format("Users greeted: %s%s%s", CYAN_BOLD , count, RESET);
         } catch (Exception e){
-            e.printStackTrace();
+            return String.format("Users greeted: %s%s%s", CYAN_BOLD , 0, RESET);
         }
     }
 }

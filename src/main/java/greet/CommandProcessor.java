@@ -1,12 +1,11 @@
 package greet;
 
-import greet.counter.Counter;
 import greet.greeter.Greet;
 
 import java.sql.SQLException;
 import java.util.Map;
 
-import static greet.ConsoleColors.*;
+import static greet.Colors.*;
 
 public class CommandProcessor {
     private final CommandExtractor commandExtractor;
@@ -27,14 +26,11 @@ public class CommandProcessor {
             clear();
             return "";
         } else if (getCommand().equalsIgnoreCase("counter")) {
-            counter();
-            return "";
+            return counter();
         } else if(getCommand().equalsIgnoreCase("help")) {
-            stringMethods.help();
-            return "";
+            return stringMethods.help();
         } else if(getCommand().equalsIgnoreCase("x")) {
-            stringMethods.FormatLanguage();
-            return "";
+            return stringMethods.FormatLanguage();
         }else {
             return stringMethods.invalid(getCommand());
         }
@@ -56,8 +52,8 @@ public class CommandProcessor {
         return db.findAllUsers().toString();
     }
 
-    public void counter()  {
-        stringMethods.counter(db.usersCounter());
+    public String counter()  {
+        return stringMethods.counter(db.usersCounter());
     }
 
     public String greet() {

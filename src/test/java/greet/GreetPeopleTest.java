@@ -2,10 +2,7 @@ package greet;
 
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static greet.ConsoleColors.*;
+import static greet.Colors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GreetPeopleTest {

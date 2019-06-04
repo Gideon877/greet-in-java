@@ -2,13 +2,9 @@ package greet.counter;
 
 import org.junit.jupiter.api.*;
 
-import javax.swing.plaf.nimbus.State;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import static greet.ConsoleColors.*;
+import static greet.Colors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CounterTest {
@@ -42,7 +38,6 @@ class CounterTest {
 
     @AfterEach
     void tearDown() {
-//        System.out.println(counterTest.usersCounter());
         counterTest.clearUserByUsername(user1);
         counterTest.clearUserByUsername(user2);
         counterTest.clearUserByUsername(user3);

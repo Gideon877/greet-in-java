@@ -1,6 +1,6 @@
 package greet;
 
-public class ConsoleColors {
+public class Colors {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
 

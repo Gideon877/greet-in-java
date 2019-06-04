@@ -1,11 +1,11 @@
 package greet;
 
-public class GreetMenu {
+public class App {
     public static void main(String[] args) throws Exception {
-        CommandBuilder command = new CommandBuilder();
+        CommandRunner command = new CommandRunner();
         command.menu();
     }
 }
 
 //        mvn dependency:copy-dependencies
-//        java -cp .:target/*: greet.GreetMenu
+//        java -cp .:target/*: greet.App

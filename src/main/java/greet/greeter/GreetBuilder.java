@@ -2,11 +2,15 @@ package greet.greeter;
 
 import greet.Language;
 
-import static greet.ConsoleColors.*;
+import static greet.Colors.*;
 
 public class GreetBuilder {
 
-    public GreetPerson greetPerson = (String Name, String language) -> {
+    public GreetPerson greetPerson = (String name, String language) -> {
+        String Name = name.replaceAll("[^a-zA-Z ]", "").trim();
+        if(Name == null || Name.isEmpty()) {
+            Name = "World";
+        }
         try {
             return greetFormat( BLACK_BOLD, Language.valueOf(language).getExpression(), Name);
         } catch (IllegalArgumentException e) {

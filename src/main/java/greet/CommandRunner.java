@@ -5,7 +5,7 @@ import greet.greeter.Greet;
 
 import java.util.Scanner;
 
-public class CommandBuilder {
+public class CommandRunner {
     StringMethods app = new StringMethods();
     public void menu() throws Exception {
         Greet db = new Counter();

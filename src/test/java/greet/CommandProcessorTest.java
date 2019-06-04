@@ -2,13 +2,8 @@ package greet;
 
 import greet.greeter.Greet;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.EnabledIf;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
-import static greet.ConsoleColors.*;
+import static greet.Colors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandProcessorTest {
