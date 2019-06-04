@@ -1,5 +1,5 @@
 create table users (
-  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  name varchar(100) not null,
+  id serial not null primary key,
+  name text not null,
   count INT NOT NULL
 );
