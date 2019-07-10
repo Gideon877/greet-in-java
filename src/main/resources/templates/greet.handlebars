@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Greeting</title>
+</head>
+<body>
+<div class="container">
+    <br><br>
+    <h2>Greeting WebApp - Spark Java</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container">
+                <br>
+                <div class="list-group">
+                    <a href="/" class="list-group-item active list-group-item-action">Menu</a>
+                    <a href="/greet" class="list-group-item list-group-item-action disabled">Greet</a>
+                    <a href="/greeted" class="list-group-item list-group-item-action">Greeted</a>
+                    <a href="/counter" class="list-group-item list-group-item-action">Counter</a>
+                    <a href="/clear" class="list-group-item list-group-item-action">Clear</a>
+                    <a href="/help" class="list-group-item list-group-item-action">Help</a>
+                    <!--                    <a href="#" class="list-group-item list-group-item-action">Exit</a>-->
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="container">
+                <hr>
+                <div class="list-group">
+                    {{#each greeted}}
+                        <a class="list-group-item list-group-item-action list-group-item-info" href="/greeted/{{@key}}">{{@key}}</a>
+                    {{/each}}
+                </div>
+                {{#each user}}
+                    <div class="card-header">
+                        {{@key}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
