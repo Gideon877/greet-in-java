@@ -32,7 +32,8 @@ class CommandProcessorTest {
         @Test
         void getGreeted() throws Exception{
             CommandProcessor commandProcessor = new CommandProcessor(db, new CommandExtractor("greeted"));
-//            assertEquals("greeted", commandProcessor.getCommand());
+            assertEquals("greeted", commandProcessor.getCommand());
+            assertEquals("{Thabang=2}", commandProcessor.menu());
         }
 
         @Test

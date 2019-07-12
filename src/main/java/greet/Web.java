@@ -1,7 +1,5 @@
 package greet;
 
-import com.google.gson.Gson;
-import com.google.gson.*;
 import greet.counter.Counter;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -28,6 +26,7 @@ public class Web {
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "greet.handlebars"));
         });
+
         post("/greet", (req, res) -> {
             String[] data = req.body().split("=");
             String username = "";
