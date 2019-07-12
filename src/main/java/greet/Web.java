@@ -1,9 +1,11 @@
 package greet;
 
 import greet.counter.Counter;
+import org.h2.engine.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.security.PrivateKey;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,12 @@ public class Web {
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "home.handlebars"));
         });
+
+//        get("/greet/:name/language/:language", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            return new HandlebarsTemplateEngine()
+//                    .render(new ModelAndView(model, "greet.handlebars"));
+//        });
 
         get("/greet", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -98,9 +106,21 @@ public class Web {
 //        get("/help", (req, res) -> "Hello World");
     }
 
-//    public static class Message {
-//        Message
-//    }
+    class User {
+        private final String username;
+        private final int count;
+
+        User(String username, int count) {
+            this.username = username;
+            this.count = count;
+        }
+
+        public Map<String, Integer> getUser(Object payload) {
+            Map<String, Integer> user = new HashMap<>();
+            user.put(username, count);
+            return user;
+        }
+    }
 }
 
 
