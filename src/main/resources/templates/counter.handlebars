@@ -16,9 +16,9 @@
                 <br>
                 <div class="list-group">
                     <a href="/" class="list-group-item active list-group-item-action">Menu</a>
-                    <a href="/greet" class="list-group-item list-group-item-action disabled">Greet</a>
+                    <a href="/greet" class="list-group-item list-group-item-action">Greet</a>
                     <a href="/greeted" class="list-group-item list-group-item-action">Greeted</a>
-                    <a href="/counter" class="list-group-item list-group-item-action">Counter</a>
+                    <a href="/counter" class="list-group-item list-group-item-action disabled">Counter</a>
                 </div>
                 <br>
             </div>
@@ -26,22 +26,15 @@
         <div class="col-md-8">
             <div class="container">
                 <br>
-                <h4 class="header">Greet Person</h4>
-
-                <form action="/greet" method="post">
-                    <div class="form-group">
-                        <label>Please enter your name.</label>
-                        <input class="form-control" type="text" placeholder="name" name="username" value="">
+                {{#each counter}}
+                    <div class="card-header">
+                        Users greeted: {{this}}
+                        <hr>
+                        <form action="/clear" method="post">
+                            <a class="btn btn-outline-danger" href="/clear" role="button" style="text-transform: uppercase;">Clear All Users</a>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-primary">Greet</button>
-                </form>
-                <br>
-                {{#if message}}
-                    <div class="alert alert-primary" role="alert">
-                        {{this.message}}
-                    </div>
-                {{/if}}
-
+                {{/each}}
             </div>
         </div>
     </div>

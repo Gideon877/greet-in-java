@@ -16,8 +16,6 @@ public class Web {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         Counter db = new Counter();
-        Gson gson = new Gson();
-        JsonParser parser = new JsonParser();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -31,22 +29,20 @@ public class Web {
                     .render(new ModelAndView(model, "greet.handlebars"));
         });
         post("/greet", (req, res) -> {
-            String data = req.body();
+            String[] data = req.body().split("=");
+            String username = "";
+            String msg = "Hello, World!";  //default greeting
+            System.out.println(req.body());
 
-            JsonElement responseData = parser.parse(String.valueOf(res));
-//            data = gson.toJson(data);
-//            JsonObject convtObj = new Gson().fromJson(data, JsonObject.class);
+            if(data.length > 1) {
+                username = data[1];
+                msg = db.greetPerson(username, "English");
+            }
 
-            System.out.println(responseData);
-            System.out.println(data);
-            System.out.println(!responseData.isJsonObject());
-            JsonObject obj = responseData.getAsJsonObject();
-
-//            System.out.println(!obj.has("username"));
-//            System.out.println(convtObj.get("username").getAsString());
+            System.out.println(msg);
 
             Map<String, String> model = new HashMap<>();
-            model.put("message", data);
+            model.put("message", msg);
 
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "greet.handlebars"));
@@ -64,17 +60,24 @@ public class Web {
         get("/greeted/:username", (req, res) -> {
             String userName = req.params("username");
             Map<String, Object> model = new HashMap<>();
-            Map<String, Integer> people = db.findAllUsers();
             Map<String, Integer> userFound = db.findUser(userName);
 
             model.put("user", userFound);
-//            model.put("greeted", people);
-
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "greeted.handlebars"));
 
         });
-        get("/counter", (req, res) -> "Hello World");
+        get("/counter", (req, res) -> {
+            System.out.println(req.attributes());
+            Map<String, Object> model = new HashMap<>();
+            Map<String, Integer> counter = new HashMap<>();
+            counter.put("Number", db.usersCounter());
+
+            model.put("counter", counter);
+
+            return new HandlebarsTemplateEngine()
+                    .render(new ModelAndView(model, "counter.handlebars"));
+        });
 
         get("/clear/:username", (req, res) -> {
             db.clearUserByUsername(req.params("username"));
@@ -82,10 +85,18 @@ public class Web {
             return "";
         });
 
-        delete("/clear", (req, res) -> "Hello World");
+        get("/clear", (req, res) -> {
+            try {
+                db.clearAllUsers();
+                res.redirect("/counter");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return "";
+        });
 //        delete("/clear/:username", (req, res) -> "Hello World");
-        get("/exit", (req, res) -> "Hello World");
-        get("/help", (req, res) -> "Hello World");
+//        get("/exit", (req, res) -> "Hello World");
+//        get("/help", (req, res) -> "Hello World");
     }
 
 //    public static class Message {

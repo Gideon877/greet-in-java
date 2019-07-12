@@ -1,5 +1,6 @@
 package greet.counter;
 
+import greet.Language;
 import greet.StringMethods;
 import greet.greeter.GreetBuilder;
 import greet.greeter.Greet;
@@ -7,6 +8,7 @@ import greet.greeter.Greet;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Counter implements Greet {
 
@@ -91,7 +93,7 @@ public class Counter implements Greet {
 
     @Override
     public Map<String, Integer> findAllUsers() {
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new TreeMap<>();
         try {
             findAllPreparedStatement.execute();
             ResultSet rs = findAllPreparedStatement.executeQuery();
@@ -138,6 +140,11 @@ public class Counter implements Greet {
             // updating existing name count by incrementing by 1.
             findAndUpdateUser(userName);
         }
-        return builder.greetPerson.greet(userName, language);
+        try {
+            return String.format("%s, %s!", Language.valueOf(language).getExpression(), userName);
+        } catch (IllegalArgumentException e) {
+            return String.format("%s, %s!", Language.valueOf("Zulu").getExpression(), userName);
+        }
+//        return builder.greetPerson.greet(userName, language);
     }
 }
