@@ -19,7 +19,7 @@
                     <a href="/greet" class="list-group-item list-group-item-action">Greet</a>
                     <a href="/greeted" class="list-group-item list-group-item-action disabled">Greeted</a>
                     <a href="/counter" class="list-group-item list-group-item-action">Counter</a>
-                    <a href="/clear" class="list-group-item list-group-item-action">Clear</a>
+<!--                    <a href="/clear" class="list-group-item list-group-item-action">Clear</a>-->
                     <a href="/help" class="list-group-item list-group-item-action">Help</a>
 <!--                    <a href="#" class="list-group-item list-group-item-action">Exit</a>-->
                 </div>
@@ -31,12 +31,19 @@
                 <hr>
                 <div class="list-group">
                     {{#each greeted}}
-                        <a class="list-group-item list-group-item-action list-group-item-info" href="/greeted/{{@key}}">{{@key}}</a>
+                        <a class="list-group-item list-group-item-action list-group-item-info" href="/greeted/{{@key}}">
+                            {{@key}}
+                        </a>
                     {{/each}}
                 </div>
                 {{#each user}}
                 <div class="card-header">
-                    {{@key}}
+                    {{@key}} has been greeted {{this}} time(s).
+                    <hr>
+                    <form action="/clear/{{@key}}" method="post">
+                        <a class="btn btn-outline-dark" href="/greeted" role="button">Back</a>
+                        <a class="btn btn-outline-danger" href="/clear/{{@key}}" role="button">Remove</a>
+                    </form>
                 </div>
                 {{/each}}
             </div>

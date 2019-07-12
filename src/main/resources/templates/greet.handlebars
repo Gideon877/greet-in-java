@@ -19,7 +19,7 @@
                     <a href="/greet" class="list-group-item list-group-item-action disabled">Greet</a>
                     <a href="/greeted" class="list-group-item list-group-item-action">Greeted</a>
                     <a href="/counter" class="list-group-item list-group-item-action">Counter</a>
-                    <a href="/clear" class="list-group-item list-group-item-action">Clear</a>
+<!--                    <a href="/clear" class="list-group-item list-group-item-action">Clear</a>-->
                     <a href="/help" class="list-group-item list-group-item-action">Help</a>
                     <!--                    <a href="#" class="list-group-item list-group-item-action">Exit</a>-->
                 </div>
@@ -28,17 +28,25 @@
         </div>
         <div class="col-md-8">
             <div class="container">
-                <hr>
-                <div class="list-group">
-                    {{#each greeted}}
-                        <a class="list-group-item list-group-item-action list-group-item-info" href="/greeted/{{@key}}">{{@key}}</a>
-                    {{/each}}
-                </div>
-                {{#each user}}
-                    <div class="card-header">
+                <br>
+                <h2 class="header">Header</h2>
+
+                <form action="/greet" method="post">
+                    <div class="form-group">
+                        <label>Please enter your name.</label>
+                        <input class="form-control" type="text" placeholder="name" name="username" value="Thabang">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Greet</button>
+                </form>
+                <br>
+                {{#if message}}
+                    <div class="alert alert-primary" role="alert">
+<!--                        A simple primary alert—check it out!-->
+                        Hello, Thabang!
                         {{@key}}
                     </div>
-                {{/each}}
+                {{/if}}
+
             </div>
         </div>
     </div>
