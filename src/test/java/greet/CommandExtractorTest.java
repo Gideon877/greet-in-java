@@ -49,8 +49,6 @@ class CommandExtractorTest {
             assertEquals(false, commandExtractor.hasName());
         }
 
-
-
     }
 
     @Nested
