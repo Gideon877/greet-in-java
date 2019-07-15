@@ -105,19 +105,19 @@ class CounterTest {
     //greet
     @Test
     void shouldGreetPerson() throws SQLException {
-        assertEquals(BLACK_BOLD + "Dumela, Thabang!" + RESET , counterTest.greetPerson(user1, "sotho"));
+        assertEquals("Dumela, Thabang!" , counterTest.greetPerson(user1, "sotho"));
         assertEquals(2, counterTest.usersCounter());
     }
 
     @Test
     void shouldGreetPersonWithDefault() throws SQLException {
-        assertEquals(BLACK_BOLD + "Sawubona, Jonas!" + RESET , counterTest.greetPerson(user2, null));
+        assertEquals("Sawubona, Jonas!", counterTest.greetPerson(user2, null));
         assertEquals(2, counterTest.usersCounter());
     }
 
     @Test
     void shouldGreetPersonWithDefaultIfNoLanguageFound() throws SQLException {
-        assertEquals(RED_BOLD_BRIGHT + "Sawubona, Jonas!" + RESET , counterTest.greetPerson(user2, "french"));
+        assertEquals("Sawubona, Jonas!" , counterTest.greetPerson(user2, "french"));
         assertEquals(2, counterTest.usersCounter());
 
     }
