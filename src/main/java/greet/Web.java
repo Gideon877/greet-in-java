@@ -1,13 +1,16 @@
 package greet;
 
 import greet.counter.Counter;
+import greet.greeter.WebGreeter;
 import org.h2.engine.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.security.PrivateKey;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -17,39 +20,48 @@ public class Web {
 
         Counter db = new Counter();
 
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            Map<String, Integer> counter = new HashMap<>();
+
+            counter.put("Number", db.usersCounter());
+            model.put("counter", counter);
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "home.handlebars"));
         });
 
-//        get("/greet/:name/language/:language", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return new HandlebarsTemplateEngine()
-//                    .render(new ModelAndView(model, "greet.handlebars"));
-//        });
 
         get("/greet", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            List<Language> languageList = Arrays.asList(Language.values());
+            Map<String, Integer> counter = new HashMap<>();
+
+            counter.put("Number", db.usersCounter());
+            model.put("counter", counter);
+            model.put("languages", languageList);
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "greet.handlebars"));
         });
 
         post("/greet", (req, res) -> {
-            String[] data = req.body().split("=");
-            String username = "";
+            WebGreeter command = new WebGreeter(req.body());
+            List<Language> languageList = Arrays.asList(Language.values());
+
             String msg = "Hello, World!";  //default greeting
             System.out.println(req.body());
 
-            if(data.length > 1) {
-                username = data[1];
-                msg = db.greetPerson(username, "English");
+            if(command.isValid()) {
+                msg = db.greetPerson(command.getName(), command.getLanguage());
             }
 
-            System.out.println(msg);
+            Map<String, Object> model = new HashMap<>();
+            Map<String, Integer> counter = new HashMap<>();
 
-            Map<String, String> model = new HashMap<>();
+            counter.put("Number", db.usersCounter());
+            model.put("counter", counter);
             model.put("message", msg);
+            model.put("languages", languageList);
 
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "greet.handlebars"));
@@ -59,7 +71,13 @@ public class Web {
         get("/greeted", (req, res) -> {
             Map<String, Integer> people = db.findAllUsers();
             Map<String, Object> model = new HashMap<>();
-            model.put("greeted", people);
+            Map<String, Integer> counter = new HashMap<>();
+
+            counter.put("Number", db.usersCounter());
+            model.put("counter", counter);
+            if(people.size() > 0) {
+                model.put("greeted", people);
+            }
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "greeted.handlebars"));
         });
@@ -68,6 +86,10 @@ public class Web {
             String userName = req.params("username");
             Map<String, Object> model = new HashMap<>();
             Map<String, Integer> userFound = db.findUser(userName);
+            Map<String, Integer> counter = new HashMap<>();
+
+            counter.put("Number", db.usersCounter());
+            model.put("counter", counter);
 
             model.put("user", userFound);
             return new HandlebarsTemplateEngine()
@@ -75,11 +97,10 @@ public class Web {
 
         });
         get("/counter", (req, res) -> {
-            System.out.println(req.attributes());
             Map<String, Object> model = new HashMap<>();
             Map<String, Integer> counter = new HashMap<>();
-            counter.put("Number", db.usersCounter());
 
+            counter.put("Number", db.usersCounter());
             model.put("counter", counter);
 
             return new HandlebarsTemplateEngine()
@@ -101,25 +122,6 @@ public class Web {
             }
             return "";
         });
-//        delete("/clear/:username", (req, res) -> "Hello World");
-//        get("/exit", (req, res) -> "Hello World");
-//        get("/help", (req, res) -> "Hello World");
-    }
-
-    class User {
-        private final String username;
-        private final int count;
-
-        User(String username, int count) {
-            this.username = username;
-            this.count = count;
-        }
-
-        public Map<String, Integer> getUser(Object payload) {
-            Map<String, Integer> user = new HashMap<>();
-            user.put(username, count);
-            return user;
-        }
     }
 }
 

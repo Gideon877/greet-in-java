@@ -1,18 +1,18 @@
 package greet;
 
 public enum Language {
-    English("Hello"),
-    Tswana("Dumela"),
-    Sotho("Dumela"),
-    Pedi("Thobela"),
-    Xhosa("Molo"),
     Afrikaans("Goeie dag"),
-    Tsonga("Avuxeni"),
-    Zulu("Sawubona"),
-    Swati("Sawubona"),
+    English("Hello"),
     Ndebele("Sawubona"),
+    Pedi("Thobela"),
+    Sotho("Dumela"),
+    Swati("Sawubona"),
     Spanish("Ola"),
-    Venda("Ndaa/Aa");
+    Tsonga("Avuxeni"),
+    Tswana("Dumela"),
+    Venda("Ndaa/Aa"),
+    Xhosa("Molo"),
+    Zulu("Sawubona");
 
     private final String expression;
 
