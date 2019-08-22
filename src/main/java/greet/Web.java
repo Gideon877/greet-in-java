@@ -2,11 +2,8 @@ package greet;
 
 import greet.counter.Counter;
 import greet.greeter.WebGreeter;
-import org.h2.engine.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.security.PrivateKey;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,9 +14,7 @@ import static spark.Spark.*;
 
 public class Web {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
         Counter db = new Counter();
-
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -30,7 +25,6 @@ public class Web {
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "home.handlebars"));
         });
-
 
         get("/greet", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -65,7 +59,6 @@ public class Web {
 
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "greet.handlebars"));
-
         });
 
         get("/greeted", (req, res) -> {

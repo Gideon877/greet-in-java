@@ -2,7 +2,6 @@ package greet.counter;
 
 import greet.Language;
 import greet.StringMethods;
-import greet.greeter.GreetBuilder;
 import greet.greeter.Greet;
 
 import java.sql.*;
@@ -144,7 +143,7 @@ public class Counter implements Greet {
 
     @Override
     public String greetPerson(String userName, String language) {
-        GreetBuilder builder = new GreetBuilder();
+//        GreetBuilder builder = new GreetBuilder();
         if(language == null || language.isEmpty()) {
             language = "Zulu";
         }
