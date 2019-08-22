@@ -18,11 +18,13 @@ public class Counter implements Greet {
     final String COUNT_UPDATE_SQL = "update users set count = count + 1 where name = ?";
     final String CLEAR_COUNT_SQL = "delete from users";
     final String CLEAR_USER_COUNT_SQL = "delete from users where name = ?";
+    final String FIND_ALL_USERS_LIMIT_SQL = "SELECT * FROM users ORDER BY name OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY";
 
     final PreparedStatement insertNameAndCountPreparedStatement;
     final PreparedStatement findNamePreparedStatement;
     final PreparedStatement updateCountPreparedStatement;
     final PreparedStatement findAllPreparedStatement;
+    final PreparedStatement findAllLimitPreparedStatement;
     final PreparedStatement clearAllPreparedStatement;
     final PreparedStatement clearUserPreparedStatement;
 
@@ -36,6 +38,7 @@ public class Counter implements Greet {
             insertNameAndCountPreparedStatement = connection.prepareStatement(USER_INSERT_SQL);
             findNamePreparedStatement = connection.prepareStatement(FIND_NAME_SQL);
             findAllPreparedStatement = connection.prepareStatement(FIND_ALL_USERS_SQL);
+            findAllLimitPreparedStatement = connection.prepareStatement(FIND_ALL_USERS_LIMIT_SQL);
             updateCountPreparedStatement = connection.prepareStatement(COUNT_UPDATE_SQL);
             clearAllPreparedStatement = connection.prepareStatement(CLEAR_COUNT_SQL);
             clearUserPreparedStatement = connection.prepareStatement(CLEAR_USER_COUNT_SQL);
@@ -107,6 +110,22 @@ public class Counter implements Greet {
         }
         return map;
     }
+
+//    public Map<String, Integer> findAllUsersWithLimit() {
+//        Map<String, Integer> map = new TreeMap<>();
+//        try {
+//            findAllLimitPreparedStatement.execute();
+//            ResultSet rs = findAllLimitPreparedStatement.executeQuery();
+//
+//            while(rs.next()) {
+//                map.put(rs.getString("name"), rs.getInt("count"));
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Failed to find all users." + e);
+//
+//        }
+//        return map;
+//    }
 
     @Override
     public void clearUserByUsername(String userName) {

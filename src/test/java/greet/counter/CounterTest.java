@@ -27,7 +27,6 @@ class CounterTest {
     @BeforeAll
     static void enroll() throws SQLException {
         counterTest.clearAllUsers();
-
     }
 
     @BeforeEach

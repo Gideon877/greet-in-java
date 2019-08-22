@@ -72,7 +72,6 @@ public class Web {
             Map<String, Integer> people = db.findAllUsers();
             Map<String, Object> model = new HashMap<>();
             Map<String, Integer> counter = new HashMap<>();
-
             counter.put("Number", db.usersCounter());
             model.put("counter", counter);
             if(people.size() > 0) {
