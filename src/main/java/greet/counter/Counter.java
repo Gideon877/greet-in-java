@@ -110,22 +110,6 @@ public class Counter implements Greet {
         return map;
     }
 
-//    public Map<String, Integer> findAllUsersWithLimit() {
-//        Map<String, Integer> map = new TreeMap<>();
-//        try {
-//            findAllLimitPreparedStatement.execute();
-//            ResultSet rs = findAllLimitPreparedStatement.executeQuery();
-//
-//            while(rs.next()) {
-//                map.put(rs.getString("name"), rs.getInt("count"));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Failed to find all users." + e);
-//
-//        }
-//        return map;
-//    }
-
     @Override
     public void clearUserByUsername(String userName) {
         try {

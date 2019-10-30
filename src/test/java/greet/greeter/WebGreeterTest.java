@@ -26,4 +26,10 @@ class WebGreeterTest {
         assertEquals("Thabang", wg.getName());
         assertEquals("English", wg.getLanguage());
     }
+
+    @Test
+    void asciiTable() {
+        char a = '1';
+        System.out.println(a);
+    }
 }

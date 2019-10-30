@@ -3,8 +3,6 @@ package greet.counter;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
-
-import static greet.Colors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CounterTest {
