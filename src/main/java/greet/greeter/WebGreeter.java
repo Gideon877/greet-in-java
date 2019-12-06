@@ -8,7 +8,6 @@ public class WebGreeter {
     public WebGreeter(String input) {
         this.input = input;
         setInputs();
-
     }
 
     private void setInputs() {

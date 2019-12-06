@@ -15,6 +15,7 @@ import static spark.Spark.*;
 public class Web {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Counter db = new Counter();
+        staticFiles.location("/public");
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -76,6 +77,7 @@ public class Web {
 
         get("/greeted/:username", (req, res) -> {
             String userName = req.params("username");
+            System.out.printf("username: %s", userName);
             Map<String, Object> model = new HashMap<>();
             Map<String, Integer> userFound = db.findUser(userName);
             Map<String, Integer> counter = new HashMap<>();
