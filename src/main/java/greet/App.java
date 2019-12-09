@@ -3,9 +3,6 @@ import greet.database.PostgresDB;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import greet.greeter.GreetBuilder;
-import greet.greeter.GreetPerson;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -52,44 +49,108 @@ public class App {
         try {
             Connection connection = getDatabaseConnection("jdbc:postgresql://localhost/greet_db");
 
-            PostgresDB greeter = new PostgresDB(connection);
-            GreetBuilder greet = new GreetBuilder();
+            PostgresDB db = new PostgresDB(connection);
 
             staticFiles.location("/public"); // Static files
 
             port(getHerokuAssignedPort());
 
             get("/", (req, res) -> {
-                Map<String, Object> dataMap = new HashMap<>();
+                Map<String, Object> model = new HashMap<>();
+                Map<String, Integer> counter = new HashMap<>();
+
+                counter.put("Number", db.usersCounter());
+                model.put("counter", counter);
+                return new HandlebarsTemplateEngine()
+                        .render(new ModelAndView(model, "home.hbs"));
+            });
+
+            get("/greet", (req, res) -> {
+                Map<String, Object> model = new HashMap<>();
                 List<Language> languageList = Arrays.asList(Language.values());
-                dataMap.put("languages", languageList);
-                dataMap.put("counter", Integer.toString(greeter.usersCounter()));
+                Map<String, Integer> counter = new HashMap<>();
 
-                return new ModelAndView(dataMap, "index.hbs");
-            }, new HandlebarsTemplateEngine());
+                counter.put("Number", db.usersCounter());
+                model.put("counter", counter);
+                model.put("languages", languageList);
+                return new HandlebarsTemplateEngine()
+                        .render(new ModelAndView(model, "greet.hbs"));
+            });
 
-            post("/", (req, res) -> {
+            post("/greet", (req, res) -> {
+                List<Language> languageList = Arrays.asList(Language.values());
+                Map<String, Object> model = new HashMap<>();
+                Map<String, Integer> counter = new HashMap<>();
 
-                // get form data values
                 String name = req.queryParams("username");
                 String language = req.queryParams("language");
-                Map<String, Object> dataMap = new HashMap<>();
-                List<Language> languageList = Arrays.asList(Language.values());
-                dataMap.put("languages", languageList);
 
-                if (language == null) {
-                    dataMap.put("error", "Language not selected!");
-                } else {
-                    String greeting = greeter.greetUsers(name, language);
-                    // put the values from the form for Handlebars to use
-                    int count = greeter.usersCounter();
-                    dataMap.put("counter", Integer.toString(count));
-                    dataMap.put("greeting", greeting);
+                counter.put("Number", db.usersCounter());
+                model.put("counter", counter);
+                model.put("message", db.greetPerson(name, language));
+                model.put("languages", languageList);
+
+                return new HandlebarsTemplateEngine()
+                        .render(new ModelAndView(model, "greet.hbs"));
+            });
+
+            get("/greeted", (req, res) -> {
+                Map<String, Integer> people = db.findAllUsers();
+                Map<String, Object> model = new HashMap<>();
+                Map<String, Integer> counter = new HashMap<>();
+
+                counter.put("Number", db.usersCounter());
+                model.put("counter", counter);
+
+                if(people.size() > 0) {
+                    model.put("greeted", people);
                 }
-                //
-                return new ModelAndView(dataMap, "index.hbs");
+                return new HandlebarsTemplateEngine()
+                        .render(new ModelAndView(model, "greeted.hbs"));
+            });
 
-            }, new HandlebarsTemplateEngine());
+            get("/greeted/:username", (req, res) -> {
+                String userName = req.params("username");
+
+                Map<String, Object> model = new HashMap<>();
+                Map<String, Integer> userFound = db.findUser(userName);
+                Map<String, Integer> counter = new HashMap<>();
+
+                counter.put("Number", db.usersCounter());
+                model.put("counter", counter);
+
+                model.put("user", userFound);
+                return new HandlebarsTemplateEngine()
+                        .render(new ModelAndView(model, "greeted.hbs"));
+
+            });
+            get("/counter", (req, res) -> {
+                Map<String, Object> model = new HashMap<>();
+                Map<String, Integer> counter = new HashMap<>();
+
+                counter.put("Number", db.usersCounter());
+                model.put("counter", counter);
+
+                return new HandlebarsTemplateEngine()
+                        .render(new ModelAndView(model, "counter.hbs"));
+            });
+
+            get("/clear/:username", (req, res) -> {
+                db.clearUserByUsername(req.params("username"));
+                res.redirect("/greeted");
+                return "";
+            });
+
+            get("/clear", (req, res) -> {
+                try {
+                    db.clearAllUsers();
+                    res.redirect("/counter");
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                return "";
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

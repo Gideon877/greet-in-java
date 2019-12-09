@@ -12,13 +12,25 @@
     <h2>Greeting WebApp</h2>
     <div class="row">
         <div class="col-md-4">
+            <div class="container">
+                <br>
+                <div class="list-group">
+                    <a href="/" class="list-group-item list-group-item-action">Menu</a>
+                    <a href="/greet" class="list-group-item active list-group-item-action disabled">Greet</a>
+                    <a href="/greeted" class="list-group-item list-group-item-action">Greeted</a>
+                    <a href="/counter" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Counter
+                        <span class="badge badge-primary badge-pill">{{#each counter}}{{this}}{{/each}}</span>
+                    </a>
+                </div>
+                <br>
+            </div>
         </div>
         <div class="col-md-8">
             <div class="container">
                 <br>
                 <h4 class="header">Greet Person</h4>
 
-                <form action="/" method="post">
+                <form action="/greet" method="post">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="select">
@@ -35,14 +47,10 @@
                     <button type="submit" class="btn btn-primary">Greet</button>
                 </form>
                 <br>
-                {{#if greeting}}
+                {{#if message}}
                     <div class="alert alert-primary" role="alert">
-                        {{this.greeting}}
+                        {{this.message}}
                     </div>
-                {{/if}}
-
-                {{#if counter}}
-                    <p>Counter:{{this.counter}}</p>
                 {{/if}}
 
             </div>

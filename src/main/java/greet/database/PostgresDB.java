@@ -1,14 +1,13 @@
 package greet.database;
 
-import greet.Language;
+import greet.greeter.Greet;
 import greet.greeter.GreetBuilder;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
-public class PostgresDB {
+public class PostgresDB implements Greet {
     private final Connection connection;
 
     public PostgresDB(Connection connection) {
@@ -71,21 +70,66 @@ public class PostgresDB {
         }
     }
 
-
     public int usersCounter() {
+        return findAllUsers().size();
+    }
+
+    @Override
+    public String greetPerson(String name, String language) throws SQLException {
+        if(language == null || language.isEmpty()) {
+            language = "Zulu";
+        }
+
+        language = Capitalize(language); name = Capitalize(name);
+
+        if(findUser(name).isEmpty()) {
+            addNewUser(name); // if name have not added, we add it
+        } else {
+            // updating existing name count by incrementing by 1.
+            findAndUpdateUser(name);
+        }
+        return new GreetBuilder().greetPerson.greet(name, language);
+    }
+
+    @Override
+    public Map<String, Integer> findAllUsers() {
+        Map<String, Integer> users = new HashMap<>();
         try {
-            CallableStatement getCount = connection.prepareCall("select count(*) as count from users");
-            ResultSet rs = getCount.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("count");
+            CallableStatement findAll = connection.prepareCall("select * from users");
+            ResultSet rs = findAll.executeQuery();
+            while (rs.next()) {
+                users.put(rs.getString("name"), rs.getInt("count"));
             }
+        }catch (SQLException e) {
+            System.out.println("Failed to find all users." + e);
+        }
+         return users;
+    }
+
+
+    @Override
+    public void clearAllUsers() {
+        try {
+            CallableStatement clear = connection.prepareCall("delete from users");
+            clear.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+
     }
 
-     static String Capitalize(String string) {
+    @Override
+    public void clearUserByUsername(String userName) {
+        try {
+            CallableStatement clear = connection.prepareCall("delete from users where name = ?");
+            clear.setString(1, userName);
+            clear.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static String Capitalize(String string) {
         string = string.toLowerCase();
         return string.substring(0, 1).toUpperCase() + string.substring(1);
     }
