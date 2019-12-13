@@ -14,6 +14,8 @@ import static spark.Spark.*;
 import static spark.route.HttpMethod.post;
 
 public class App {
+    static Api api = new Api();
+
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if(processBuilder.environment().get("PORT") != null) {
@@ -150,6 +152,8 @@ public class App {
                 }
                 return "";
             });
+
+            get("/api/users", (req, res) -> api.getUsers(), new JsonTransformer());
 
         } catch (Exception e) {
             e.printStackTrace();
