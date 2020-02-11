@@ -7,10 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GreetPeopleTest {
     GreetPeople greeter = new GreetPeople();
+    private String name = "John";
+    @Test
+    void Lihle() {
+        name = "Vic";
+        System.out.printf("Hello, my name is %s.", name);
+    }
 
     @Nested
     @DisplayName("when command is greet")
     class GreetPerson {
+
         GreetPeople greet;
         final String userOne = "Dan";
         final String zulu = "Zulu";
