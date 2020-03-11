@@ -1,5 +1,6 @@
 package greet;
 
+import greet.exceptions.NameNotFoundException;
 import greet.greeter.Greet;
 
 import java.sql.SQLException;
@@ -23,8 +24,7 @@ public class CommandProcessor {
         } else if(getCommand().equalsIgnoreCase("greeted")) {
             return greeted();
         } else if(getCommand().equalsIgnoreCase("clear")) {
-            clear();
-            return "";
+            return clear();
         } else if (getCommand().equalsIgnoreCase("counter")) {
             return counter();
         } else if(getCommand().equalsIgnoreCase("help")) {
@@ -40,10 +40,13 @@ public class CommandProcessor {
         if(hasName()) {
             Map<String, Integer> userFound = db.findUser(getName());
             try {
+                if(userFound.get(getName()) == null) {
+                    throw new NameNotFoundException(getName());
+                }
                 int counter = userFound.get(getName());
                 return String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , counter, RESET);
-            } catch (NullPointerException e) {
-                return String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, getName(), RESET, CYAN_BOLD , 0, RESET);
+            } catch (NameNotFoundException e) {
+                return e.getMessage();
             }
         }
         return db.findAllUsers().toString();
@@ -61,18 +64,20 @@ public class CommandProcessor {
         }
     }
 
-    private void clear() {
+    private String clear() {
         try {
             if(hasName()) {
                 db.clearUserByUsername(getName());
+                return getName() + " have been cleared from database.";
             } else {
                 db.clearAllUsers();
+                return "Greeted names have been cleared from database.";
             }
         } catch (Exception e) {
             if(hasName()) {
-                System.out.println("failed to clear name: " + getName());
+                return "failed to clear name: " + getName();
             } else {
-                System.out.println("failed to clear all users");
+                return "failed to clear all users.";
             }
         }
     }

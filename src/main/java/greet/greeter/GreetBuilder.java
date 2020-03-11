@@ -1,20 +1,19 @@
 package greet.greeter;
 
 import greet.Language;
+import greet.exceptions.LanguageNotFoundException;
 
 import static greet.Colors.*;
 
 public class GreetBuilder {
 
     public GreetPerson greetPerson = (String name, String language) -> {
-        String Name = name.replaceAll("[^a-zA-Z ]", "").trim();
-        if(Name == null || Name.isEmpty()) {
-            Name = "World";
-        }
+        name = name.replaceAll("[^a-zA-Z ]", "").trim();
+
         try {
-            return greetFormat( BLACK_BOLD, Language.valueOf(language).getExpression(), Name);
+            return greetFormat( BLACK_BOLD, Language.valueOf(language).getExpression(), name);
         } catch (IllegalArgumentException e) {
-            return greetFormat(RED_BOLD_BRIGHT, Language.valueOf("Zulu").getExpression(), Name);
+            return String.format("%s %s", greetFormat(RED_BOLD_BRIGHT, Language.valueOf("Zulu").getExpression(), name), new LanguageNotFoundException(language).getMessage());
         }
     };
 
