@@ -7,7 +7,7 @@ public class LanguageNotFoundException extends Exception {
     private final String message;
 
     public LanguageNotFoundException(String language) {
-        this.message = String.format("Language: %s%s%s is not available at the moment." ,  RED_BOLD_BRIGHT,  language , RESET);
+        this.message = String.format("The language %s%s%s is not available at the moment." ,  RED_BOLD_BRIGHT,  language , RESET);
     }
 
     @Override

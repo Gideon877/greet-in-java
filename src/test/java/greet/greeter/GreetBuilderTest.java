@@ -47,19 +47,19 @@ class GreetBuilderTest {
         @Test
         @DisplayName("an empty String is passed.")
         void shouldGreetWorld_1() {
-            assertEquals(BLACK_BOLD + "Hello, World!" + RESET, greeter.greetPerson.greet("", "English"));
+            assertEquals(BLACK_BOLD + "Hello, !" + RESET, greeter.greetPerson.greet("", "English"));
         }
 
         @Test
         @DisplayName("an empty space String is passed.")
         void shouldGreetWorld_2() {
-            assertEquals(BLACK_BOLD + "Hello, World!" + RESET, greeter.greetPerson.greet("         ", "English"));
+            assertEquals(BLACK_BOLD + "Hello, !" + RESET, greeter.greetPerson.greet("         ", "English"));
         }
 
         @Test
         @DisplayName("characters are passed.")
         void shouldGreetWorld_3() {
-            assertEquals(BLACK_BOLD + "Hello, World!" + RESET, greeter.greetPerson.greet(".;':<>!@#$%^&*()`", "English"));
+            assertEquals(BLACK_BOLD + "Hello, !" + RESET, greeter.greetPerson.greet(".;':<>!@#$%^&*()`", "English"));
         }
     }
 

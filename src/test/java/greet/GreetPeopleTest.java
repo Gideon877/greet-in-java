@@ -2,6 +2,9 @@ package greet;
 
 import org.junit.jupiter.api.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static greet.Colors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,6 +94,15 @@ class GreetPeopleTest {
         greeter.clearUserByUsername("Jonas");
         assertEquals(2, greeter.usersCounter());
 
+    }
+
+    @Test
+    void doingMapsWithJason() {
+        Map<String, Integer> names = new HashMap<>();
+        names.put("Theo", 35);
+        names.put("Theo", 90);
+//        assertEquals(false, names.containsKey("Theo"));
+        System.out.println(names);
     }
 
 //    @Test
