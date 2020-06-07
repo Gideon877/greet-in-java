@@ -33,6 +33,6 @@ public class GreetBuilder {
     }
 
     private String greetFormat(String color, String language, String userName) {
-        return String.format("%s%s, %s!%s", color, language, userName, RESET);
+        return String.format("%s%s, %s!", color, language, userName);
     }
 }
