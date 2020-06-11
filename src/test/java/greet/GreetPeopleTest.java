@@ -11,11 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class GreetPeopleTest {
     GreetPeople greeter = new GreetPeople();
     private String name = "John";
-    @Test
-    void Lihle() {
-        name = "Vic";
-        System.out.printf("Hello, my name is %s.", name);
-    }
 
     @Nested
     @DisplayName("when command is greet")
@@ -95,24 +90,4 @@ class GreetPeopleTest {
         assertEquals(2, greeter.usersCounter());
 
     }
-
-    @Test
-    void doingMapsWithJason() {
-        Map<String, Integer> names = new HashMap<>();
-        names.put("Theo", 35);
-        names.put("Theo", 90);
-//        assertEquals(false, names.containsKey("Theo"));
-        System.out.println(names);
-    }
-
-//    @Test
-//    void builderTest() {
-//        StringBuilder sb = new StringBuilder();
-//
-//        sb.append("------------\n");
-//        sb.append("GoodBye\n");
-//        sb.append("------------\n");
-//
-//        System.out.println(sb);
-//    }
 }

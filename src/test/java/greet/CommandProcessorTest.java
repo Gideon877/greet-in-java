@@ -17,8 +17,7 @@ class CommandProcessorTest {
             assertEquals("greet", commandProcessor.getCommand());
             assertEquals("Xhosa", commandProcessor.getLanguage());
             assertEquals("Thabang", commandProcessor.getName());
-            assertEquals(BLACK_BOLD + "Molo, Thabang!" + RESET, commandProcessor.menu());
-            assertEquals(BLACK_BOLD + "Molo, Thabang!" + RESET, commandProcessor.menu());
+            assertEquals(BLACK_BOLD + "Molo, Thabang!", commandProcessor.menu());
         }
 
         @AfterEach
@@ -39,7 +38,7 @@ class CommandProcessorTest {
         void getGreetedUser() throws Exception{
             CommandProcessor commandProcessor = new CommandProcessor(db, new CommandExtractor("greeted Thabang"));
             assertEquals("greeted", commandProcessor.getCommand());
-            String msg = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, commandProcessor.getName(), RESET, CYAN_BOLD , 2, RESET);
+            String msg = String.format("%s%s%s have been greeted %s%s%s time(s)!", BLUE_BOLD, commandProcessor.getName(), RESET, CYAN_BOLD , 1, RESET);
             assertEquals(msg, commandProcessor.menu());
         }
     }
