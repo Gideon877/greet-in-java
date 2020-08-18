@@ -20,19 +20,19 @@ class GreetBuilderTest {
         @Test
         @DisplayName("a [name] is passed.")
         void shouldGreetSomeone_1() {
-            assertEquals(BLACK_BOLD + "Hello, Thabang!" + RESET, greeter.greetPerson.greet("Thabang", "English"));
+            assertEquals(BLACK_BOLD + "Hello, Thabang!", greeter.greetPerson.greet("Thabang", "English"));
         }
 
         @Test
         @DisplayName("name and an empty space is passed.")
         void shouldGreetSomeone_2() {
-            assertEquals(BLACK_BOLD + "Hello, Thabang!" + RESET, greeter.greetPerson.greet("  Thabang       ", "English"));
+            assertEquals(BLACK_BOLD + "Hello, Thabang!", greeter.greetPerson.greet("  Thabang       ", "English"));
         }
 
         @Test
         @DisplayName("name and characters are passed.")
         void shouldGreetSomeone_3() {
-            assertEquals(BLACK_BOLD + "Hello, Thabang!" + RESET, greeter.greetPerson.greet(".;':<>!Thabang@#$%^&*()`", "English"));
+            assertEquals(BLACK_BOLD + "Hello, Thabang!", greeter.greetPerson.greet(".;':<>!Thabang@#$%^&*()`", "English"));
         }
     }
 
@@ -47,19 +47,19 @@ class GreetBuilderTest {
         @Test
         @DisplayName("an empty String is passed.")
         void shouldGreetWorld_1() {
-            assertEquals(BLACK_BOLD + "Hello, !" + RESET, greeter.greetPerson.greet("", "English"));
+            assertEquals(BLACK_BOLD + "Hello, !" , greeter.greetPerson.greet("", "English"));
         }
 
         @Test
         @DisplayName("an empty space String is passed.")
         void shouldGreetWorld_2() {
-            assertEquals(BLACK_BOLD + "Hello, !" + RESET, greeter.greetPerson.greet("         ", "English"));
+            assertEquals(BLACK_BOLD + "Hello, !" , greeter.greetPerson.greet("         ", "English"));
         }
 
         @Test
         @DisplayName("characters are passed.")
         void shouldGreetWorld_3() {
-            assertEquals(BLACK_BOLD + "Hello, !" + RESET, greeter.greetPerson.greet(".;':<>!@#$%^&*()`", "English"));
+            assertEquals(BLACK_BOLD + "Hello, !" , greeter.greetPerson.greet(".;':<>!@#$%^&*()`", "English"));
         }
     }
 
