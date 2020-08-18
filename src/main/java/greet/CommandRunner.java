@@ -1,5 +1,6 @@
 package greet;
 
+
 import greet.counter.Counter;
 import greet.greeter.Greet;
 
@@ -9,6 +10,7 @@ public class CommandRunner {
     StringMethods app = new StringMethods();
     public void menu() throws Exception {
         Greet db = new Counter();
+
         Scanner input =  new Scanner(System.in);
 
         boolean exitNow = true;
